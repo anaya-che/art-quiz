@@ -6,11 +6,11 @@ class MainPage {
     constructor() {
         this.body = document.querySelector('body');
         this.mainElement = document.querySelector('.main');
-        this.getMainPage();
+        this.setMainPage();
         document.addEventListener('click', this.chooseCategory);
     }
 
-    async getMainPage() {
+    async setMainPage() {
         const src = `./assets/img/background.jpg`;
         const bgImage = await PageLayout.createImage(src);
         this.body.style.backgroundImage = `url(${bgImage.src})`;

@@ -7,17 +7,18 @@ class CategoryPage {
         this.body = document.querySelector('body');
         this.mainElement = document.querySelector('.main');
         this.page = page;
-        this.getArtistsPage();
+        this.setArtistsPage();
         document.addEventListener('click', this.returnHome);
+        document.addEventListener('click', this.startQuiz);
     }
 
-    async getArtistsPage() {
+    setArtistsPage() {
         this.body.style.backgroundImage = `unset`;
         this.mainElement.innerHTML = `
             <div class="categories-container">
                 <div class="categories__buttons-container">
                     <div class="categories__button" id="home">Home</div>
-                    <h1 class="categories__title">Categories</h1>
+                    <div class="categories__title">Categories</div>
                     <div class="categories__button" id="score">Score</div>
                 </div>
                 <div class="cards-container"></div>
@@ -65,6 +66,13 @@ class CategoryPage {
     returnHome({ target }) {
         if (target.closest('#home'))
         Settings.changePage('home');
+    }
+
+    startQuiz({ target }) {
+        if (target.closest('.card')) {
+            let quizCategory = Number(target.id.split('card')[1]);
+            Settings.changePage(quizCategory);
+        }
     }
 
 }

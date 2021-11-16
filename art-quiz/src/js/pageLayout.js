@@ -1,5 +1,6 @@
 import MainPage from './mainPage'
 import CategoryPage from './categoryPage'
+import QuizPage from './quizPage'
 
 class PageLayout {
     
@@ -18,17 +19,9 @@ class PageLayout {
     });
 
     init() {
-        switch(this.page) {
-            case 'home':
-                new MainPage;
-                break;
-            case 'artists':
-                new CategoryPage('artists');
-                break;
-            case 'pictures':
-                new CategoryPage('pictures');
-                break;
-        }
+        if (this.page === 'home') new MainPage;
+        if (this.page === 'artists' || this.page === 'pictures') new CategoryPage(this.page);
+        if (typeof this.page === 'number') new QuizPage(this.page);
     }
 
 }
