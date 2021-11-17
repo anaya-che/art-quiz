@@ -1,15 +1,7 @@
-import MainPage from './mainPage'
 import CategoryPage from './categoryPage'
 import QuizPage from './quizPage'
 
 class PageLayout {
-    
-    constructor(page) {
-        this.page = page;
-        this.body = document.querySelector('body');
-        this.mainElement = document.querySelector('.main');
-        this.init();
-    }
 
     static createImage = (src) => new Promise((res, rej) => {
         const img = new Image();
@@ -18,10 +10,21 @@ class PageLayout {
         img.src = src;
     });
 
-    init() {
-        if (this.page === 'home') new MainPage;
-        if (this.page === 'artists' || this.page === 'pictures') new CategoryPage(this.page);
-        if (typeof this.page === 'number') new QuizPage(this.page);
+    static async setMainPage() {
+        const src = `./assets/img/background.jpg`;
+        const bgImage = await this.createImage(src);
+        document.querySelector('body').style.backgroundImage = `url(${bgImage.src})`;
+        document.querySelector('.main').innerHTML = `
+            <div class="button-container">
+                <div class="main__button" id="artists">Artists</div>
+                <div class="main__button" id="pictures">Pictures</div>
+            </div>`;
+    }
+
+    static init(page) {
+        if (page === 'home') this.setMainPage();
+        if (page === 'artists' || page === 'pictures') CategoryPage.setArtistsPage(page);
+        if (typeof page === 'number') QuizPage.setQuizPage(page);
     }
 
 }

@@ -1,3 +1,3 @@
-import Settings from './js/settings'
+import App from './js/app'
 
-new Settings;
+new App;

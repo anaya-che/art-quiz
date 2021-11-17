@@ -1,19 +1,10 @@
-import Settings from './settings'
-
+import App from './app'
+import Question from './question'
 class QuizPage {
 
-    constructor(category) {
-        this.body = document.querySelector('body');
-        this.mainElement = document.querySelector('.main');
-        this.category = category;
-        this.setQuizPage();
-        document.addEventListener('click', this.returnHome);
-        document.addEventListener('click', this.returnToCategory);
-    }
-    
-    async setQuizPage() {
-        console.log(this.category);
-        this.mainElement.innerHTML = `
+    static setQuizPage(page) {
+        if(page < 12) {
+            document.querySelector('.main').innerHTML = `
             <div class="quiz-container">
                 <div class="quiz__question-container">
                     <div class="quiz__button" id="home">Home</div>
@@ -40,16 +31,7 @@ class QuizPage {
                     <div class="quiz__answer" id="answer4"></div>
                 </div>
             </div>`
-    }
-
-    returnHome({ target }) {
-        if (target.closest('#home'))
-        Settings.changePage('home');
-    }
-
-    returnToCategory({ target }) {
-        if (target.closest('#categories'))
-        Settings.changePage('artists');
+        }
     }
 }
 
