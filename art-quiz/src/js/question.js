@@ -1,4 +1,5 @@
 import PageLayout from './pageLayout';
+import CategoryPage from './categoryPage';
 
 class Question {
 
@@ -22,6 +23,7 @@ class Question {
         this.popupElement = document.querySelector('.popup-container');
         this.overlayElement = document.querySelector('.page-overlay');
         this.answerContainer = document.querySelector('.answer-container');
+        this.resultContainer = document.querySelector('.result-container');
         this.indicatorElement = document.querySelector('.answer__indicator');
         // window.addEventListener('beforeunload', this.setLocalStorage.bind(this))
     }
@@ -90,19 +92,20 @@ class Question {
     }
 
     popupShowAnimation() {
-        this.body.style.overflow = 'hidden'
-        this.popupElement.style.left = '0'
-        this.overlayElement.style.opacity = '0.6'
-        this.answerContainer.style.left = 'calc(50vw - 300px)'
-        this.answerContainer.style.bottom = 'calc(-50vh - 300px)'
+        this.body.style.overflow = 'hidden';
+        this.popupElement.style.left = '0';
+        this.overlayElement.style.opacity = '0.6';
+        this.answerContainer.style.left = 'calc(50vw - 300px)';
+        this.answerContainer.style.bottom = 'calc(-50vh - 300px)';
     }
 
     popupHideAnimation() {
-        this.body.style.overflow = 'unset'
-        this.popupElement.style.left = '-100vw'
-        this.overlayElement.style.opacity = '0'
-        this.answerContainer.style.left = '-100vw'
-        this.answerContainer.style.bottom = 'calc(-100vh - 600px)'
+        setTimeout(() => this.body.style.overflow = 'unset', 1200);
+        // this.body.style.overflow = 'unset';
+        this.popupElement.style.left = '-100vw';
+        this.overlayElement.style.opacity = '0';
+        this.answerContainer.style.left = '-100vw';
+        this.answerContainer.style.bottom = 'calc(-100vh - 600px)';
     }
 
     unsetButtonColor() {
@@ -116,16 +119,15 @@ class Question {
             this.unsetButtonColor()
             this.popupHideAnimation();
             this.currentQuestion += 1;
-            let num = this.currentQuestion;
-            await this.getQuizImg(num);
-            this.getAnswers(num);
+            await this.getQuizImg(this.currentQuestion);
+            this.getAnswers(this.currentQuestion);
             this.setAnswerToPopup(this.currentQuestion)
         }
 
         else if(this.currentQuestion === this.lastQuestion) {
             this.setLocalStorage();
             this.getResults();
-
+            this.showResult();
         }
     }
 
@@ -135,14 +137,22 @@ class Question {
         for (let key in obj) {
             if (obj[key]) correctAnswers += 1;
         }
-        return correctAnswers;
+        document.querySelector('.result__score').textContent = `${correctAnswers} / 10`
+    }
+
+    showResult() {
+        
+        this.answerContainer.style.left = '-100vw';
+        this.answerContainer.style.bottom = 'calc(-100vh - 600px)';
+        this.resultContainer.style.left = 'calc(50vw - 300px)';
+        this.resultContainer.style.bottom = 'calc(-50vh - 300px)';
     }
 
     setLocalStorage() {
-        let obj = {};
+        let obj = CategoryPage.getLocalStorage();
         obj[this.category] = this.answersData;
-        const json = JSON.stringify(this.answersData);
-        localStorage.setItem(this.category, json);
+        const json = JSON.stringify(obj);
+        localStorage.setItem('answers', json);
     }
 
 }

@@ -2,19 +2,6 @@ class QuizPage {
 
     static setQuizPage(page) {
 
-        document.querySelector('body').innerHTML += `
-            <div class="popup-container">
-                <div class="page-overlay"></div>
-                <div class="answer-container">
-                    <div class="answer__indicator"></div>
-                    <div class="answer__image"></div>
-                    <div class="answer__author"></div>
-                    <div class="answer__name"></div>
-                    <div class="answer__year"></div>
-                    <div class="answer__next-button">Next question</div>
-                </div>
-            </div>`
-
         if(page < 12) {
             document.querySelector('.main').innerHTML = `
             <div class="quiz-container">
@@ -41,6 +28,23 @@ class QuizPage {
                     <div class="quiz__answer" id="answer2"></div>
                     <div class="quiz__answer" id="answer3"></div>
                     <div class="quiz__answer" id="answer4"></div>
+                </div>
+            </div>
+            <div class="popup-container">
+                <div class="page-overlay"></div>
+                <div class="answer-container">
+                    <div class="answer__indicator"></div>
+                    <div class="answer__image"></div>
+                    <div class="answer__author"></div>
+                    <div class="answer__name"></div>
+                    <div class="answer__year"></div>
+                    <div class="answer__next-button">Next question</div>
+                </div>
+                <div class="result-container">
+                    <div class="result__text">Congratulations!</div>
+                    <div class="result__image"></div>
+                    <div class="result__score"></div>
+                    <div class="result__next-button" id="next-category">Next</div>
                 </div>
             </div>`
         }

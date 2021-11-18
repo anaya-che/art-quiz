@@ -28,14 +28,28 @@ class CategoryPage {
     static renderCards(num, max) {
         const cardContainerElement = document.querySelector('.cards-container');
         for(let i = num; i < max; i++) {
-            cardContainerElement.innerHTML += `
-                <div class="card" id="card${i}">
+            let score = this.setCartsResults(i);
+            let out = '';
+            if (score !== 0) {
+                out = `
+                    <div class="card" id="card${i}">
+                        <div class="card-title">
+                            <div class="card-number">${(i + 1).toString().padStart(2, "0")}</div>
+                            <div class="card-score">${score} / 10</div>
+                        </div>
+                    </div>`;
+            }
+            else out = `
+                <div class="card gray-image" id="card${i}">
                     <div class="card-title">
                         <div class="card-number">${(i + 1).toString().padStart(2, "0")}</div>
                         <div class="card-score"></div>
                     </div>
-                </div>`
+                </div>`;
+
+            cardContainerElement.innerHTML += out;
         }
+
     }
 
     static async getCategoryBg(imgNum, maxImgNum, id) {
@@ -53,6 +67,24 @@ class CategoryPage {
     static setCategoryBg(src, id) {
             const cardElement = document.querySelector(`#card${(id)}`);
             cardElement.style.backgroundImage = `url(${src})`;
+    }
+
+    static getLocalStorage() {
+        if(localStorage.getItem('answers')) {
+            const cardsStatsJson = localStorage.getItem('answers')
+            const cardsStats = JSON.parse(cardsStatsJson);
+            return cardsStats;
+        }
+    }
+
+    static setCartsResults(id) {
+        const cardsStats = this.getLocalStorage();
+        let correctAnswers = 0;
+        let obj = cardsStats[id];
+        for (let key in obj) {
+            if (obj[key]) correctAnswers += 1;
+        }
+        return correctAnswers;
     }
 
 }

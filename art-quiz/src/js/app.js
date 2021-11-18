@@ -16,7 +16,6 @@ class App {
         document.addEventListener('click', this.changePage.bind(this));
         document.addEventListener('click', this.checkAnswer.bind(this));
         document.addEventListener('click', this.nextQuestion.bind(this));
-        // window.addEventListener('load', this.getLocalStorage);
     }
 
     async getData() {
@@ -49,7 +48,7 @@ class App {
             this.startQuiz();
         }
 
-        if (target.closest('#categories')) {
+        if (target.closest('#categories') || target.closest('#next-category')) {
             if(this.page < 12) this.page = 'artists';
             if(this.page > 12) this.page = 'pictures';
             PageLayout.init(this.page);
@@ -77,14 +76,6 @@ class App {
     nextQuestion({ target }) {
         if (target.closest('.answer__next-button')) {
             this.quiz.nextQuestion(target);
-        }
-    }
-
-    getLocalStorage(category) {
-        if(localStorage.getItem(category)) {
-            const cardsStats = localStorage.getItem(category)
-            const cardsStatsObject = JSON.parse(cardsStats);
-            console.log(cardsStatsObject);
         }
     }
 
