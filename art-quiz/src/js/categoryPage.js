@@ -42,15 +42,17 @@ class CategoryPage {
         while(imgNum < maxImgNum) {
             let src = `./assets/quiz-img/${(imgNum)}.webp`;
             let cardImage = await PageLayout.createImage(src);
-            this.setCategoryBg(cardImage.src, id);
+            if (document.querySelector(`#card${(id)}`)) {
+                this.setCategoryBg(cardImage.src, id);
+            }
             imgNum += 10;
             id += 1;
         }
     }
 
     static setCategoryBg(src, id) {
-        const cardElement = document.querySelector(`#card${(id)}`);
-        cardElement.style.backgroundImage = `url(${src})`;
+            const cardElement = document.querySelector(`#card${(id)}`);
+            cardElement.style.backgroundImage = `url(${src})`;
     }
 
 }

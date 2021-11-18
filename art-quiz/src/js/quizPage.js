@@ -1,8 +1,20 @@
-import App from './app'
-import Question from './question'
 class QuizPage {
 
     static setQuizPage(page) {
+
+        document.querySelector('body').innerHTML += `
+            <div class="popup-container">
+                <div class="page-overlay"></div>
+                <div class="answer-container">
+                    <div class="answer__indicator"></div>
+                    <div class="answer__image"></div>
+                    <div class="answer__author"></div>
+                    <div class="answer__name"></div>
+                    <div class="answer__year"></div>
+                    <div class="answer__next-button">Next question</div>
+                </div>
+            </div>`
+
         if(page < 12) {
             document.querySelector('.main').innerHTML = `
             <div class="quiz-container">
@@ -32,6 +44,7 @@ class QuizPage {
                 </div>
             </div>`
         }
+
     }
 }
 
