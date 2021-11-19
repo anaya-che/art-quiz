@@ -46,7 +46,8 @@ class QuizPage {
                     <div class="result__score"></div>
                     <div class="result__next-button" id="next-category">Next</div>
                 </div>
-            </div>`
+            </div>
+            `
         }
 
     }

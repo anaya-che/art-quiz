@@ -30,12 +30,13 @@
 
 :root {
   --font: 32px;
-  --padding: 20px 30px;
+  --padding: 15px 30px;
   --padding-main: 5px 30px;
   --dark-blue: #000003;
   --yellow: #F5DF4D;
   --orange: #FDAC53;
   --white: #FFFFFF;
+  --gray: #939597;
   --back-black: rgba(0, 0, 3, 0.3);
   --back-gray: rgba(54, 57, 69, 0.3);
 }
@@ -43,6 +44,10 @@
 * {
   margin: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .hidden {
@@ -64,7 +69,7 @@ body {
 
 .header {
   max-width: 1024px;
-  min-height: 10vh;
+  min-height: 8vh;
   margin: 0 auto;
   padding: var(--padding);
   display: flex;
@@ -94,14 +99,14 @@ body {
 
 .main {
   max-width: 1024px;
-  min-height: 80vh;
+  min-height: 84vh;
   margin: 0 auto;
   padding: var(--padding-main);
 }
 
 .footer {
   max-width: 1024px;
-  min-height: 10vh;
+  min-height: 8vh;
   margin: 0 auto;
   padding: var(--padding);
   display: flex;
@@ -189,21 +194,27 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  font-size: 0.7em;
 }
 
 .categories__buttons-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.categories__button {
-  width: 150px;
-  height: 45px;
-  padding: 12px;
+.categories__title {
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+
+.categories__button,
+.quiz__button {
+  width: 170px;
+  height: 35px;
+  padding: 9px;
   background-color: var(--back-black);
-  font-size: 0.7em;
+  font-size: 0.5em;
   text-transform: uppercase;
   outline: 1px solid rgba(255, 255, 255, 0.5);
   transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
@@ -211,14 +222,16 @@ body {
   cursor: pointer;
 }
 
-.categories__button:hover {
+.categories__button:hover,
+.quiz__button:hover {
   border: 1px solid var(--white);
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 15px;
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
-.categories__button:active {
+.categories__button:active,
+.quiz__button:active {
   transform: translateY(3px);
 }
 
@@ -235,11 +248,23 @@ body {
   height: 280px;
   background-size: cover;
   background-position: center;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
   cursor: pointer;
 }
 
+.card:hover .card-title {
+  background-color: var(--back-black);
+  color: var(--orange);
+  opacity: 1;
+}
+
+.card:active {
+  transform: translateY(3px);
+}
+
 .gray-image {
-  filter: grayscale(100%);
+  background-color: var(--gray);
+  background-blend-mode: luminosity;
 }
 
 .card-title {
@@ -249,14 +274,185 @@ body {
   padding: 10px;
   background-color: var(--dark-blue);
   opacity: 0.7;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .card-number {
-  font-size: 2em;
+  font-size: 1.2em;
 }
 
 .card-score {
+  font-size: 0.8em;
   color: var(--orange);
+}
+
+/* QUIZ */
+
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translate(-100vw, -50vh);
+}
+
+.quiz__question-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translate(-50vw, -50vh);
+}
+
+.quiz__img {
+  width: 600px;
+  height: 600px;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translate(-50vw, -50vh) scale(0);
+}
+
+.quiz__pagination {
+  display: flex;
+  gap: 15px;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.pagination-dot {
+  border: 0.5px solid var(--white);
+  border-radius: 50px;
+  width: 8px;
+  height: 8px;
+}
+
+.quiz__answers-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 600px;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+  transform: translate(-100vw, 0);
+}
+
+.quiz__answer {
+  width: 300px;
+  height: 40px;
+  padding: 9px;
+  font-size: 0.5em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.quiz__answer:hover {
+  border: 1px solid var(--white);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* POPUP */
+
+.popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transform: translateX(-100vw);
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.page-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #9BB7D4;
+  opacity: 0;
+  z-index: 3;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.answer-container,
+.result-container {
+  position: absolute;
+  bottom: calc(50vh - 300px);
+  left: calc(50vw - 300px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 30px;
+  width: 600px;
+  height: 600px;
+  color: #363945;
+  font-size: 0.6em;
+  background-color: var(--white);
+  z-index: 5;
+  transform: translateY(-100vh) scale(0);
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.result-container {
+  justify-content: space-between;
+  transition-delay: 0.8s;
+}
+
+.answer__indicator {
+  position: absolute;
+  top: -31px;
+  width: 65px;
+  height: 65px;
+  border: 5px solid white;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+}
+
+.answer__image,
+.result__image {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 15px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.result__image {
+  background-image: url("../assets/svg/champion-cup.svg");
+}
+
+.result__text,
+.result__score {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.answer__next-button,
+.result__next-button {
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  margin-top: 60px;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  color: var(--white);
+  background-color: var(--orange);
+  cursor: pointer;
+}
+
+.answer__next-button:hover,
+.result__next-button:hover {
+  border: 1px solid var(--white);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.answer__next-button:active,
+.result__next-button:active {
+  transform: translateY(3px);
 }
 
 @media (max-width: 1023px) {
@@ -292,7 +488,7 @@ body {
   }
 
   .categories__button {
-    padding: 15px;
+    padding: 10px;
   }
 
 }

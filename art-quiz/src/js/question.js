@@ -1,5 +1,6 @@
 import PageLayout from './pageLayout';
 import CategoryPage from './categoryPage';
+import Animation from './animation';
 
 class Question {
 
@@ -14,18 +15,14 @@ class Question {
         this.dotId;
         this.answersData;
         this.body = document.querySelector('body');
-        this.quizImgElement = document.querySelector('.quiz__img')
+        this.quizImgElement = document.querySelector('.quiz__img');
         this.quizAnswerElement = document.querySelectorAll('.quiz__answer');
-        this.answerImageElement = document.querySelector('.answer__image')
+        this.answerImageElement = document.querySelector('.answer__image');
         this.authorElement = document.querySelector('.answer__author');
         this.nameElement = document.querySelector('.answer__name');
         this.yearElement = document.querySelector('.answer__year');
-        this.popupElement = document.querySelector('.popup-container');
-        this.overlayElement = document.querySelector('.page-overlay');
-        this.answerContainer = document.querySelector('.answer-container');
-        this.resultContainer = document.querySelector('.result-container');
         this.indicatorElement = document.querySelector('.answer__indicator');
-        // window.addEventListener('beforeunload', this.setLocalStorage.bind(this))
+        this.animation = new Animation;
     }
 
     async startQuiz() {
@@ -37,6 +34,8 @@ class Question {
         await this.getQuizImg(this.firstQuestion);
         this.getAnswers(this.firstQuestion);
         this.setAnswerToPopup(this.firstQuestion)
+
+        this.animation.quizShowAnimation();
     }
 
     async getQuizImg(num){
@@ -76,7 +75,7 @@ class Question {
             this.indicatorElement.style.backgroundImage = 'url("../assets/svg/correct.svg")';
             document.querySelector(`#dot${this.dotId}`).style.backgroundColor = '#00A170';
             this.dotId += 1;
-            this.popupShowAnimation();
+            this.animation.popupShowAnimation();
             this.answersData[this.currentQuestion] = true;
         }
 
@@ -86,26 +85,9 @@ class Question {
             this.indicatorElement.style.backgroundImage = 'url("../assets/svg/wrong.svg")';
             document.querySelector(`#dot${this.dotId}`).style.backgroundColor = '#E9897E';
             this.dotId += 1;
-            this.popupShowAnimation();
+            this.animation.popupShowAnimation();
             this.answersData[this.currentQuestion] = false;
         }
-    }
-
-    popupShowAnimation() {
-        this.body.style.overflow = 'hidden';
-        this.popupElement.style.left = '0';
-        this.overlayElement.style.opacity = '0.6';
-        this.answerContainer.style.left = 'calc(50vw - 300px)';
-        this.answerContainer.style.bottom = 'calc(-50vh - 300px)';
-    }
-
-    popupHideAnimation() {
-        setTimeout(() => this.body.style.overflow = 'unset', 1200);
-        // this.body.style.overflow = 'unset';
-        this.popupElement.style.left = '-100vw';
-        this.overlayElement.style.opacity = '0';
-        this.answerContainer.style.left = '-100vw';
-        this.answerContainer.style.bottom = 'calc(-100vh - 600px)';
     }
 
     unsetButtonColor() {
@@ -117,17 +99,19 @@ class Question {
     async nextQuestion() {
         if(this.currentQuestion < this.lastQuestion) {
             this.unsetButtonColor()
-            this.popupHideAnimation();
+            this.animation.popupHideAnimation();
             this.currentQuestion += 1;
             await this.getQuizImg(this.currentQuestion);
             this.getAnswers(this.currentQuestion);
-            this.setAnswerToPopup(this.currentQuestion)
+            this.setAnswerToPopup(this.currentQuestion);
+            this.animation.quizHideAnimation()
+            setTimeout(() => this.animation.quizShowAnimation(), 1200);
         }
 
         else if(this.currentQuestion === this.lastQuestion) {
             this.setLocalStorage();
             this.getResults();
-            this.showResult();
+            this.animation.showResult();
         }
     }
 
@@ -138,14 +122,6 @@ class Question {
             if (obj[key]) correctAnswers += 1;
         }
         document.querySelector('.result__score').textContent = `${correctAnswers} / 10`
-    }
-
-    showResult() {
-        
-        this.answerContainer.style.left = '-100vw';
-        this.answerContainer.style.bottom = 'calc(-100vh - 600px)';
-        this.resultContainer.style.left = 'calc(50vw - 300px)';
-        this.resultContainer.style.bottom = 'calc(-50vh - 300px)';
     }
 
     setLocalStorage() {
