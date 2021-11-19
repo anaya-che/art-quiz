@@ -2,9 +2,12 @@
 
 class Animation {
     
-    constructor() {
+    constructor(fromPage, category) {
+        this.category = category;
+        this.fromPage = fromPage;
         this.quizContainer = document.querySelector('.quiz-container');
-        this.quizImgElement = document.querySelector('.quiz__img')
+        this.quizImgElement = document.querySelector('.quiz__img');
+        this.quizImgAnswerContainer = document.querySelector('.quiz__img-container');
         this.answersContainer = document.querySelector('.quiz__answers-container')
         this.questionContainer = document.querySelector('.quiz__question-container')
         this.popupElement = document.querySelector('.popup-container');
@@ -15,16 +18,30 @@ class Animation {
 
     quizShowAnimation() {
         this.quizContainer.style.transform = 'translateX(0)';
-        this.quizImgElement.style.transform = 'translateY(0)';
-        this.answersContainer.style.transform = 'translateY(0)';
         this.questionContainer.style.transform = 'translateY(0)';
+
+        if (this.fromPage === 'artists') {
+            this.quizImgElement.style.transform = 'translateY(0)';
+            this.answersContainer.style.transform = 'translateY(0)';
+        }
+
+        if (this.fromPage === 'pictures') {
+            this.quizImgAnswerContainer.style.transform = 'translateY(0)';
+        }
     }
 
     quizHideAnimation() {
         this.quizContainer.style.transform = 'translate(-100vw, -50vh)';
-        this.quizImgElement.style.transform = 'translate(-50vw, -50vh) scale(0)';
-        this.answersContainer.style.transform = 'translate(-100vw, 0)';
         this.questionContainer.style.transform = 'translate(-50vw, -50vh)';
+
+        if (this.fromPage === 'artists') {
+            this.quizImgElement.style.transform = 'translate(-50vw, -50vh) scale(0)';
+            this.answersContainer.style.transform = 'translate(-100vw, 0)';
+        }
+
+        if (this.fromPage === 'pictures') {
+            this.quizImgAnswerContainer.style.transform = 'translate(-50vw, -50vh) scale(0)';
+        }
     }
 
     popupShowAnimation() {

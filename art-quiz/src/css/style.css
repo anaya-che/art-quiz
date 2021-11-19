@@ -235,11 +235,12 @@ body {
   transform: translateY(3px);
 }
 
-.cards-container {
+.cards-container,
+.score-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 28px;
 }
 
 .card {
@@ -286,6 +287,21 @@ body {
   color: var(--orange);
 }
 
+/* SCORE */
+
+.score_cards-container {
+  width: 220px;
+  height: 280px;
+}
+
+.score_card-item {
+  width: 220px;
+  height: 280px;
+  background-image: url("../assets/quiz-img/101.webp");
+  background-size: cover;
+  background-position: center;
+}
+
 /* QUIZ */
 
 .quiz-container {
@@ -294,13 +310,14 @@ body {
   align-items: center;
   gap: 10px;
   transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-  transform: translate(-100vw, -50vh);
+  /* transform: translate(-100vw, -50vh); */
 }
 
 .quiz__question-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
   width: 100%;
   transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
   transform: translate(-50vw, -50vh);
@@ -309,6 +326,9 @@ body {
 .quiz__img {
   width: 600px;
   height: 600px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
   transform: translate(-50vw, -50vh) scale(0);
 }
@@ -349,6 +369,33 @@ body {
 .quiz__answer:hover {
   border: 1px solid var(--white);
   box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.quiz__img-container {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ grid-gap: 20px;
+ transform: translate(-50vw, -50vh) scale(0);
+ transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.quiz__img-answer {
+  width: 300px;
+  height: 300px;
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.quiz__img-answer:hover {
+  transform: scale(1.01);
+}
+
+.quiz__img-answer:active {
+  transform: translateY(3px);
 }
 
 /* POPUP */
@@ -397,7 +444,7 @@ body {
 
 .result-container {
   justify-content: space-between;
-  transition-delay: 0.8s;
+  transition-delay: 0.5s;
 }
 
 .answer__indicator {

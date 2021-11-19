@@ -4,8 +4,9 @@ import Animation from './animation';
 
 class Question {
 
-    constructor(category, data, questions) {
-        this.category = category
+    constructor(fromPage, category, data, questions) {
+        this.category = category;
+        this.fromPage = fromPage
         this.data = data;
         this.questions = questions;
         this.startQuiz();
@@ -16,13 +17,15 @@ class Question {
         this.answersData;
         this.body = document.querySelector('body');
         this.quizImgElement = document.querySelector('.quiz__img');
+        this.quizQuestiionElement = document.querySelector('.quiz__question');
         this.quizAnswerElement = document.querySelectorAll('.quiz__answer');
+        this.quizImgAnswerElements = document.querySelectorAll('.quiz__img-answer');
         this.answerImageElement = document.querySelector('.answer__image');
         this.authorElement = document.querySelector('.answer__author');
         this.nameElement = document.querySelector('.answer__name');
         this.yearElement = document.querySelector('.answer__year');
         this.indicatorElement = document.querySelector('.answer__indicator');
-        this.animation = new Animation;
+        this.animation = new Animation(this.fromPage, this.category);
     }
 
     async startQuiz() {
@@ -32,17 +35,24 @@ class Question {
         this.currentQuestion = this.firstQuestion;
         this.dotId = 1;
         await this.getQuizImg(this.firstQuestion);
-        this.getAnswers(this.firstQuestion);
+        if (this.fromPage === 'artists') this.getAuthorAnswers(this.firstQuestion);
+        if (this.fromPage === 'pictures') {
+            this.setQuizQuestion(this.firstQuestion);
+            this.getImgAnswers(this.firstQuestion);
+        }
         this.setAnswerToPopup(this.firstQuestion)
-
         this.animation.quizShowAnimation();
     }
 
     async getQuizImg(num){
         const src = `./assets/quiz-img/${num}.webp`;
         const quizImage = await PageLayout.createImage(src);
-        this.quizImgElement.style.backgroundImage = `url(${quizImage.src})`;
-        this.answerImageElement.style.backgroundImage = `url(${quizImage.src})`
+        this.answerImageElement.style.backgroundImage = `url(${quizImage.src})`;
+        if (this.fromPage === 'artists') this.quizImgElement.style.backgroundImage = `url(${quizImage.src})`;
+    }
+
+    setQuizQuestion(num) {
+        this.quizQuestiionElement.textContent = `Какую из этих картин написал ${this.questions[num].author}?`
     }
 
     setAnswerToPopup(num) {
@@ -51,7 +61,7 @@ class Question {
         this.yearElement.textContent = this.questions[num].year;
     }
 
-    getAnswers(num) {
+    getAuthorAnswers(num) {
         let answersArr = [];
         answersArr.push(this.questions[num].author);
         while(answersArr.length < 4) {
@@ -64,12 +74,30 @@ class Question {
         });
     }
 
+    getImgAnswers(num) {
+        let answersArr = [];
+        answersArr.push(this.questions[num].imageNum);
+        while(answersArr.length < 4) {
+            let i = Math.floor(Math.random() * 240);
+            if (!answersArr.includes(this.data[i].imageNum) 
+            && this.data[i].author !== this.questions[num].author) answersArr.push(this.data[i].imageNum);
+        }
+        this.shuffleAnswers(answersArr);
+        this.quizImgAnswerElements.forEach( async (el, i) => {
+            el.id = answersArr[i];
+            const src = `./assets/quiz-img/${answersArr[i]}.webp`;
+            const quizImage = await PageLayout.createImage(src);
+            el.style.backgroundImage = `url(${quizImage.src})`;
+        });
+    }
+
     shuffleAnswers(arr) {
         arr.sort(() => Math.random() - 0.5);
     }
 
     checkAnswer(target) {
-        if (target.textContent === this.questions[this.currentQuestion].author) {
+        if ((this.fromPage === 'artists' && target.textContent === this.questions[this.currentQuestion].author) 
+        || (this.fromPage === 'pictures' && target.id === this.questions[this.currentQuestion].imageNum)) {
             target.style.backgroundColor = '#00A170';
             this.indicatorElement.style.backgroundColor = '#00A170';
             this.indicatorElement.style.backgroundImage = 'url("../assets/svg/correct.svg")';
@@ -91,9 +119,17 @@ class Question {
     }
 
     unsetButtonColor() {
-        this.quizAnswerElement.forEach(el => {
-            el.style.backgroundColor = 'unset';
-        })
+        if (this.fromPage === 'artists') {
+            this.quizAnswerElement.forEach(el => {
+                el.style.backgroundColor = 'unset';
+            })
+        }
+
+        if (this.fromPage === 'pictures') {
+            this.quizImgAnswerElements.forEach(el => {
+                el.style.backgroundColor = 'unset';
+            });
+        }
     }
 
     async nextQuestion() {
@@ -102,10 +138,14 @@ class Question {
             this.animation.popupHideAnimation();
             this.currentQuestion += 1;
             await this.getQuizImg(this.currentQuestion);
-            this.getAnswers(this.currentQuestion);
+            if (this.fromPage === 'artists') this.getAuthorAnswers(this.currentQuestion);
+            if (this.fromPage === 'pictures') {
+                this.setQuizQuestion(this.currentQuestion);
+                this.getImgAnswers(this.currentQuestion);
+            }
             this.setAnswerToPopup(this.currentQuestion);
-            this.animation.quizHideAnimation()
-            setTimeout(() => this.animation.quizShowAnimation(), 1200);
+            this.animation.quizHideAnimation();
+            setTimeout(() => this.animation.quizShowAnimation(), 1000);
         }
 
         else if(this.currentQuestion === this.lastQuestion) {
@@ -127,7 +167,6 @@ class Question {
     setLocalStorage() {
         let obj = {};
         if (localStorage.getItem('answers')) obj = CategoryPage.getLocalStorage();
-        
         obj[this.category] = this.answersData;
         const json = JSON.stringify(obj);
         localStorage.setItem('answers', json);
