@@ -125,7 +125,9 @@ class Question {
     }
 
     setLocalStorage() {
-        let obj = CategoryPage.getLocalStorage();
+        let obj = {};
+        if (localStorage.getItem('answers')) obj = CategoryPage.getLocalStorage();
+        
         obj[this.category] = this.answersData;
         const json = JSON.stringify(obj);
         localStorage.setItem('answers', json);

@@ -30,7 +30,7 @@ class CategoryPage {
         for(let i = num; i < max; i++) {
             let score = this.setCartsResults(i);
             let out = '';
-            if (score !== 0) {
+            if (score !== undefined) {
                 out = `
                     <div class="card" id="card${i}">
                         <div class="card-title">
@@ -79,12 +79,17 @@ class CategoryPage {
 
     static setCartsResults(id) {
         const cardsStats = this.getLocalStorage();
-        let correctAnswers = 0;
-        let obj = cardsStats[id];
-        for (let key in obj) {
-            if (obj[key]) correctAnswers += 1;
+        if (cardsStats) {
+            let correctAnswers = 0;
+            let obj = cardsStats[id];
+            if (obj) {
+                for (let key in obj) {
+                    if (obj[key]) correctAnswers += 1;
+                }
+                return correctAnswers;
+            }
+            else return undefined;
         }
-        return correctAnswers;
     }
 
 }
