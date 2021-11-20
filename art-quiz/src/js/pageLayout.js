@@ -24,10 +24,10 @@ class PageLayout {
 
     static init(fromPage, toPage) {
         if (toPage === 'home') this.setMainPage();
-        if (toPage === 'score') ScorePage.setScorePage();
+        // if (toPage === 'score') ScorePage.setScorePage();
         // if (fromPage === 'score' && typeof toPage === 'number') ScorePage.renderCards(toPage);
         if (toPage === 'artists' || toPage === 'pictures') CategoryPage.setArtistsPage(toPage);
-        if (typeof toPage === 'number' && fromPage !== 'score') QuizPage.setQuizPage(fromPage, toPage);
+        if (typeof toPage === 'number') QuizPage.setQuizPage(fromPage, toPage);
     }
 
 }

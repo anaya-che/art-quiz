@@ -9,7 +9,7 @@ class CategoryPage {
                 <div class="categories__buttons-container">
                     <div class="categories__button" id="home">Home</div>
                     <div class="categories__title">Categories</div>
-                    <div class="categories__button" id="score">Score</div>
+                    <div class="plug"></div>
                 </div>
                 <div class="cards-container"></div>
             </div>`
@@ -37,6 +37,7 @@ class CategoryPage {
                             <div class="card-number">${(i + 1).toString().padStart(2, "0")}</div>
                             <div class="card-score">${score} / 10</div>
                         </div>
+                        <div class="score_button" id="score${i}">Score</div>
                     </div>`;
             }
             else out = `
