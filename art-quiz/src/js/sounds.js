@@ -1,15 +1,6 @@
-import Settings from './settings';
 const soundEffects = document.querySelector('.soundEffects');
 
 class Sounds {
-    
-    static playMusic() {
-        audioMusic.play();
-    }
-
-    static stopMusic() {
-        audioMusic.pause();
-    }
 
     static correctSound() {
         soundEffects.setAttribute('src', "../assets/audio/correct.mp3");

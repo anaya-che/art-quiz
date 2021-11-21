@@ -18,8 +18,8 @@ class App {
         document.addEventListener('DOMContentLoaded', PageLayout.init(this.fromPage, this.page));
         document.addEventListener('DOMContentLoaded', this.settings = new Settings);
         document.addEventListener('click', this.changePage.bind(this));
-        // document.addEventListener('click', this.checkAnswer.bind(this));
-        // document.addEventListener('click', this.nextQuestion.bind(this));
+        document.addEventListener('click', this.checkAnswer.bind(this));
+        document.addEventListener('click', this.nextQuestion.bind(this));
         document.addEventListener('click', this.showCardScoreInfo);
     }
 

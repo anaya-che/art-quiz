@@ -31,10 +31,7 @@ class Question {
         this.indicatorElement = document.querySelector('.answer__indicator');
         this.timerElement = document.querySelector('.timer');
         this.animation = new Animation(this.fromPage, this.category);
-
         this.interval;
-        document.addEventListener('click', this.checkAnswer.bind(this));
-        document.addEventListener('click', this.nextQuestion.bind(this));
         document.addEventListener('click', this.stopTimerOnPage.bind(this));
     }
 
@@ -106,38 +103,36 @@ class Question {
         arr.sort(() => Math.random() - 0.5);
     }
 
-    checkAnswer({ target }) {
-        if (target.closest('.quiz__answer') || target.closest('.quiz__img-answer')) {
-            if ((this.fromPage === 'artists' && target.textContent === this.questions[this.currentQuestion].author) 
-            || (this.fromPage === 'pictures' && target.id === this.questions[this.currentQuestion].imageNum)) {
-                target.style.backgroundColor = '#00A170';
-                this.correctAnswer();
-            }
-            else {
-                target.style.backgroundColor = '#E9897E';
-                this.wrongAnswer();
-            }
+    checkAnswer(target) {
+        if ((this.fromPage === 'artists' && target.textContent === this.questions[this.currentQuestion].author) 
+        || (this.fromPage === 'pictures' && target.id === this.questions[this.currentQuestion].imageNum)) {
+            target.style.backgroundColor = '#00A170';
+            this.correctAnswer();
+        }
+        else {
+            target.style.backgroundColor = '#E9897E';
+            this.wrongAnswer();
         }
     }
 
     correctAnswer() {
-        Sounds.correctSound();
         this.indicatorElement.style.backgroundColor = '#00A170';
         this.indicatorElement.style.backgroundImage = 'url("../assets/svg/correct.svg")';
         document.querySelector(`#dot${this.dotId}`).style.backgroundColor = '#00A170';
         this.dotId += 1;
         this.animation.popupShowAnimation();
         this.answersData[this.currentQuestion] = true;
+        Sounds.correctSound();
     }
 
     wrongAnswer() {
-        Sounds.errorSound();
         this.indicatorElement.style.backgroundColor = '#E9897E';
         this.indicatorElement.style.backgroundImage = 'url("../assets/svg/wrong.svg")';
         document.querySelector(`#dot${this.dotId}`).style.backgroundColor = '#E9897E';
         this.dotId += 1;
         this.animation.popupShowAnimation();
         this.answersData[this.currentQuestion] = false;
+        Sounds.errorSound();
     }
 
     unsetButtonColor() {
@@ -154,30 +149,28 @@ class Question {
         }
     }
 
-    async nextQuestion({ target }) {
-        if (target.closest('.answer__next-button')) {
-            if(this.currentQuestion < this.lastQuestion) {
-                this.startTimer();
-                this.unsetButtonColor()
-                this.animation.popupHideAnimation();
-                this.currentQuestion += 1;
-                await this.getQuizImg(this.currentQuestion);
-                if (this.fromPage === 'artists') this.getAuthorAnswers(this.currentQuestion);
-                if (this.fromPage === 'pictures') {
-                    this.setQuizQuestion(this.currentQuestion);
-                    this.getImgAnswers(this.currentQuestion);
-                }
-                this.setAnswerToPopup(this.currentQuestion);
-                this.animation.quizHideAnimation();
-                setTimeout(() => this.animation.quizShowAnimation(), 1000);
+    async nextQuestion(target) {
+        if(this.currentQuestion < this.lastQuestion) {
+            this.startTimer();
+            this.unsetButtonColor()
+            this.animation.popupHideAnimation();
+            this.currentQuestion += 1;
+            await this.getQuizImg(this.currentQuestion);
+            if (this.fromPage === 'artists') this.getAuthorAnswers(this.currentQuestion);
+            if (this.fromPage === 'pictures') {
+                this.setQuizQuestion(this.currentQuestion);
+                this.getImgAnswers(this.currentQuestion);
             }
+            this.setAnswerToPopup(this.currentQuestion);
+            this.animation.quizHideAnimation();
+            setTimeout(() => this.animation.quizShowAnimation(), 1000);
+        }
 
-            else if(this.currentQuestion === this.lastQuestion) {
-                Sounds.endOfQuiz();
-                this.setLocalStorage();
-                this.getResults();
-                this.animation.showResult();
-            }
+        else if(this.currentQuestion === this.lastQuestion) {
+            this.setLocalStorage();
+            this.getResults();
+            this.animation.showResult();
+            Sounds.endOfQuiz();
         }
     }
 
@@ -206,26 +199,27 @@ class Question {
     }
 
     stopTimer() {
-        clearInterval(this.interval);
-        this.countDown = this.timeValue;
+        if (this.time === 'on') {
+            clearInterval(this.interval);
+        }
     }
 
     stopTimerOnPage({ target }) {
         if (target.closest('#home') 
         || target.closest('#categories') 
+        || target.closest('.header-settings')
         || target.closest('.quiz__answer') 
-        || target.closest('.quiz__img-answer') 
-        || target.closest('.header-settings')) {
+        || target.closest('.quiz__img-answer')) {
             this.stopTimer();
         }
     }
 
     timer() {
         if (this.countDown >= 0) {
-            this.timerElement.textContent = `00:${this.countDown}`;
+            this.timerElement.textContent = `00:${this.countDown.toString().padStart(2, "0")}`;
             this.countDown -= 1;
         }
-        
+
         if (this.countDown < 0) {
             this.stopTimer();
             this.wrongAnswer();
