@@ -582,6 +582,148 @@ body {
   transform: translateY(3px);
 }
 
+/* SETTINGS */
+
+.settings-main-title {
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+
+.settings-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.settings-volume-container,
+.settings-timer-container {
+  background-color: var(--back-gray);
+  width: 400px;
+  height: 400px;
+}
+
+
+
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.volume {
+  width: 20px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../assets/svg/volume.svg");
+}
+
+.muted {
+  background-image: url("../assets/svg/mute.svg");
+}
+
+.volume-muted {
+  opacity: 0.5;
+  filter: grayscale(0.4);
+}
+
+.volume-bar {
+  width: 200px;
+  height: 5px;
+  background: #FFFFFF;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.volume-bar-percentage {
+  width: 100%;
+  height: 5px;
+  background: var(--orange);
+  transition: 0.25s;
+}
+
+
+
+input[type=checkbox]{
+	visibility: hidden;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 35px;
+}
+
+.switch-handle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray);
+  border-radius: 34px;
+  transition: .4s;
+}
+
+.switch-handle::before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--white);
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.switch-label {
+  font-size: 0.4em;
+  cursor: pointer;
+}
+
+.switch-label::before {
+  position: absolute;
+  content: attr(data-off);
+  right: 10px;
+  top: 7px;
+  color: var(--white);
+}
+
+.switch-label::after {
+  position: absolute;
+  content: attr(data-on);
+  left: 10px;
+  top: 7px;
+  color: var(--white);
+  opacity: 0;
+}
+
+#volume-switch:checked ~ label .volume-switch-label::before,
+#music-switch:checked ~ label .music-switch-label::before {
+  opacity: 0;
+}
+
+#volume-switch:checked ~ label .volume-switch-label::after,
+#music-switch:checked ~ label .music-switch-label::after {
+  opacity: 1;
+}
+
+#volume-switch:checked ~ label .volume-switch-handle,
+#music-switch:checked ~ label .music-switch-handle {
+  background-color: var(--orange);
+}
+
+#volume-switch:checked ~ label .volume-switch-handle::before,
+#music-switch:checked ~ label .music-switch-handle::before {
+  transform: translateX(35px);
+}
+
+
 @media (max-width: 1023px) {
 
   .categories__buttons-container {

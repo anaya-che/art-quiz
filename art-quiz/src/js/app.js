@@ -1,6 +1,7 @@
 import PageLayout from './pageLayout';
 import Question from './question';
 import ScorePage from './scorePage';
+import Settings from './settings';
 
 class App {
 
@@ -15,6 +16,7 @@ class App {
         this.currentQuestion;
         this.quiz;
         document.addEventListener('DOMContentLoaded', PageLayout.init(this.fromPage, this.page));
+        document.addEventListener('DOMContentLoaded', this.settings = new Settings);
         document.addEventListener('click', this.changePage.bind(this));
         document.addEventListener('click', this.checkAnswer.bind(this));
         document.addEventListener('click', this.nextQuestion.bind(this));
@@ -68,6 +70,11 @@ class App {
             if(this.fromPage === 'pictures') this.page = 'pictures';
             PageLayout.init(this.fromPage, this.page);
         }
+
+        if (target.closest('.header-settings') && this.page !== 'settings') {
+            this.page = 'settings';
+            this.settings.setSettingsPage();
+        }
     }
 
     startQuiz() {
@@ -82,7 +89,6 @@ class App {
             if(i >= num && i < num + 10) this.questions[i] = el;
         });
     }
-
 
     checkAnswer({ target }) {
         if (target.closest('.quiz__answer') || target.closest('.quiz__img-answer')) {

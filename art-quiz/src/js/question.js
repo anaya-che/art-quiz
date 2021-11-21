@@ -1,6 +1,7 @@
 import PageLayout from './pageLayout';
 import CategoryPage from './categoryPage';
 import Animation from './animation';
+import Sounds from './sounds';
 
 class Question {
 
@@ -98,6 +99,7 @@ class Question {
     checkAnswer(target) {
         if ((this.fromPage === 'artists' && target.textContent === this.questions[this.currentQuestion].author) 
         || (this.fromPage === 'pictures' && target.id === this.questions[this.currentQuestion].imageNum)) {
+            Sounds.correctSound();
             target.style.backgroundColor = '#00A170';
             this.indicatorElement.style.backgroundColor = '#00A170';
             this.indicatorElement.style.backgroundImage = 'url("../assets/svg/correct.svg")';
@@ -108,6 +110,7 @@ class Question {
         }
 
         else {
+            Sounds.errorSound();
             target.style.backgroundColor = '#E9897E';
             this.indicatorElement.style.backgroundColor = '#E9897E';
             this.indicatorElement.style.backgroundImage = 'url("../assets/svg/wrong.svg")';
@@ -149,6 +152,7 @@ class Question {
         }
 
         else if(this.currentQuestion === this.lastQuestion) {
+            Sounds.endOfQuiz();
             this.setLocalStorage();
             this.getResults();
             this.animation.showResult();
