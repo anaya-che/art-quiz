@@ -21,6 +21,7 @@ class Settings {
         this.volumeButton;
         this.timeSwitch;
         this.timeValueInput;
+        this.timeContainer;
         this.soundEffects = document.querySelector('.soundEffects');
         document.addEventListener('click', this.volumeSettings.bind(this));
         window.addEventListener('load', this.getLocalStorage())
@@ -28,45 +29,49 @@ class Settings {
 
     setSettingsPage() {
         document.querySelector('body').style.backgroundImage = `unset`;
-        document.querySelector('.main').innerHTML = `<div class="settings-main-title">Settings</div>
+        document.querySelector('.main').innerHTML = `
+        
         <div class="settings-container">
-            <div class="settings-volume-container">
-                <div class="settings-title">Change Volume</div>
-                <div class="volume-container">
-                    <div class="volume"></div>
-                    <div class="volume-bar">
-                        <div class="volume-bar-percentage"></div>
+            <div class="settings-title-container">
+                <div class="categories__button" id="home">Home</div>
+                <div class="settings-main-title">Settings</div>
+                <div class="plug"></div>
+            </div>
+            <div class="settings-inner-container">
+                <div class="settings-volume-container">
+                    <div class="settings-title">Change Volume</div>
+                    <div class="volume-container">
+                        <div class="volume"></div>
+                        <div class="volume-bar">
+                            <div class="volume-bar-percentage"></div>
+                        </div>
                     </div>
+                    <div class="settings-title">Volume Off / On</div>
+                    <input type="checkbox" id="volume-switch">
+                    <label for="volume-switch" class="switch">
+                        <span class="volume-switch-handle switch-handle"></span>
+                        <span class="volume-switch-label switch-label" data-on="On" data-off="Off"></span>
+                    </label>
                 </div>
-                <div class="settings-title">Volume Off / On</div>
-                <input type="checkbox" id="volume-switch">
-                <label for="volume-switch" class="switch">
-                    <span class="volume-switch-handle switch-handle"></span>
-                    <span class="volume-switch-label switch-label" data-on="On" data-off="Off"></span>
-                </label>
-                <div class="settings-title">Music Off / On</div>
-                <input type="checkbox" id="music-switch">
-                <label for="music-switch" class="switch">
-                    <span class="music-switch-handle switch-handle"></span>
-                    <span class="music-switch-label switch-label" data-on="On" data-off="Off"></span>
-                </label>
-            </div>
-            <div class="settings-timer-container">
-                <div class="settings-title">Change Time</div>
-                <div class="time-container">
-                    <button class="time-button" type="button" onclick="this.nextElementSibling.stepDown()">−</button>
-                    <input class="time__number" id="time-value" type="number" min="5" max="30" readonly="" step="5" value="15">
-                    <button class="time-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+                <div class="settings-timer-container">
+                    <div class="settings-title">Change Time</div>
+                    <div class="time-container">
+                        <button class="time-button" type="button" onclick="this.nextElementSibling.stepDown()">−</button>
+                        <input class="time__number" id="time-value" type="number" min="5" max="30" readonly step="5" value="15">
+                        <button class="time-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+                    </div>
+                    <div class="settings-title">Time Off / On</div>
+                    <input type="checkbox" id="time-switch">
+                    <label for="time-switch" class="switch">
+                        <span class="time-switch-handle switch-handle"></span>
+                        <span class="time-switch-label switch-label" data-on="On" data-off="Off"></span>
+                    </label>
                 </div>
-                <div class="settings-title">Time Off / On</div>
-                <input type="checkbox" id="time-switch">
-                <label for="time-switch" class="switch">
-                    <span class="time-switch-handle switch-handle"></span>
-                    <span class="time-switch-label switch-label" data-on="On" data-off="Off"></span>
-                </label>
             </div>
-            <div class="categories__button" id="home">Home</div>
-            <div class="categories__button" id="save">Save</div>
+            <div class="settings-button-container">
+                <div class="categories__button" id="save">Save</div>
+                <div class="categories__button" id="default">Default</div>
+            </div>
         </div>`
 
         this.volumeSwitch = document.querySelector('#volume-switch');
@@ -75,7 +80,8 @@ class Settings {
         this.volumeButton = document.querySelector('.volume');
         this.timeSwitch = document.querySelector('#time-switch');
         this.timeValueInput = document.querySelector('#time-value');
-
+        this.timeContainer = document.querySelector('.time-container');
+        this.getLocalStorage();
         this.showValuesOnPage();
     }
 
@@ -111,6 +117,10 @@ class Settings {
         if (event.target.closest('#save')) {
             this.saveSettings();
         }
+
+        if (event.target.closest('#default')) {
+            this.setDefaultValues();
+        }
     }
 
     muteVolumeOnPage() {
@@ -137,24 +147,29 @@ class Settings {
     }
 
     updateVolumeOnPage(event) {
-        this.tempSettings.muted = true;
-        const sliderWidth = window.getComputedStyle(this.volumeBar).width;
-        let newVolume = Math.abs(event.offsetX / parseInt(sliderWidth));
-        if (newVolume < 0.02) newVolume = 0;
-        this.volumeBarPercentage.style.width = `${newVolume * 100}%`;
-        if (newVolume === 0) this.tempSettings.muted = false;
-        this.muteVolumeOnPage();
-        this.tempSettings.volume = newVolume;
+        if (this.tempSettings.muted === 'false') {
+            const sliderWidth = window.getComputedStyle(this.volumeBar).width;
+            let newVolume = Math.abs(event.offsetX / parseInt(sliderWidth));
+            if (newVolume < 0.02) newVolume = 0;
+            this.volumeBarPercentage.style.width = `${newVolume * 100}%`;
+            if (newVolume === 0) {
+                this.tempSettings.muted = 'true';
+                this.muteVolume();
+            }
+            this.tempSettings.volume = newVolume;
+        }
     }
 
     switchTimeOnPage() {
         if (this.tempSettings.time === 'on') {
             this.tempSettings.time = 'off';
             this.timeSwitch.checked = false;
+            this.timeContainer.classList.add('inactive');
         }
         else {
             this.tempSettings.time = 'on';
             this.timeSwitch.checked = true;
+            this.timeContainer.classList.remove('inactive');
         }
     }
 
@@ -193,16 +208,27 @@ class Settings {
             this.timeValue = localStorage.getItem('timeValue');
         }
         this.applySettings();
+        this.tempSettings = { muted: this.muted, volume: this.volume, time: this.time, timeValue: this.timeValue }
     }
 
     showValuesOnPage() {
-        this.tempSettings = { muted: this.muted, volume: this.volume, time: this.time, timeValue: this.timeValue };
         this.volumeBarPercentage.style.width = `${this.volume * 100}%`;
-        if (this.muted == 'true') this.muteVolume();
-        if (this.muted == 'false') this.unmuteVolume();
-        if (this.time === 'on') this.timeSwitch.checked = true;
-        if (this.time === 'off') this.timeSwitch.checked = false;
-        this.timeValueInput.value = this.timeValue;
+        if (this.tempSettings.muted === 'true') this.muteVolume();
+        if (this.tempSettings.muted === 'false') this.unmuteVolume();
+        if (this.tempSettings.time === 'on') {
+            this.timeSwitch.checked = true;
+            this.timeContainer.classList.remove('inactive');
+        }
+        if (this.tempSettings.time === 'off') {
+            this.timeSwitch.checked = false;
+            this.timeContainer.classList.add('inactive');
+            document.querySelectorAll('.time-button').forEach(el => {
+                el.setAttribute('onclick', "event.preventDefault()");
+            });
+            
+        }
+        this.timeValueInput.value = this.tempSettings.timeValue;
+        
     }
 
     applySettings() {
@@ -211,6 +237,14 @@ class Settings {
         this.soundEffects.volume = this.volume;
     }
 
+    stopDefaultAction(event) {
+        event.preventDefault();
+    }
+
+    setDefaultValues() {
+        this.tempSettings = { muted: 'false', volume: 1, time: 'on', timeValue: 15 };
+        this.showValuesOnPage();
+    }
 }
 
 export default Settings;
