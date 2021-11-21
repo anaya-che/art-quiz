@@ -18,8 +18,8 @@ class App {
         document.addEventListener('DOMContentLoaded', PageLayout.init(this.fromPage, this.page));
         document.addEventListener('DOMContentLoaded', this.settings = new Settings);
         document.addEventListener('click', this.changePage.bind(this));
-        document.addEventListener('click', this.checkAnswer.bind(this));
-        document.addEventListener('click', this.nextQuestion.bind(this));
+        // document.addEventListener('click', this.checkAnswer.bind(this));
+        // document.addEventListener('click', this.nextQuestion.bind(this));
         document.addEventListener('click', this.showCardScoreInfo);
     }
 
@@ -79,7 +79,7 @@ class App {
 
     startQuiz() {
         this.getInfoForQuestions();
-        this.quiz = new Question(this.fromPage, this.page, this.data, this.questions);
+        this.quiz = new Question(this.fromPage, this.page, this.data, this.questions, this.settings.time, this.settings.timeValue);
     }
 
     getInfoForQuestions() {

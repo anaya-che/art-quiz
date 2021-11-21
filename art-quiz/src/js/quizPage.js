@@ -10,6 +10,7 @@ class QuizPage {
                     <div class="quiz__question">Кто автор данной картины?</div>
                     <div class="quiz__button" id="categories">Categories</div>
                 </div>
+                <div class="timer"></div>
                 <div class="quiz__img"></div>
                 <div class="quiz__pagination">
                     <div class="pagination-dot" id="dot1"></div>
@@ -57,6 +58,7 @@ class QuizPage {
                         <div class="quiz__question"></div>
                         <div class="quiz__button" id="categories">Categories</div>
                     </div>
+                    <div class="timer"></div>
                     <div class="quiz__img-container">
                         <div class="quiz__img-answer" id="answer1"></div>
                         <div class="quiz__img-answer" id="answer2"></div>

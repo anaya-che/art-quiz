@@ -14,11 +14,13 @@ class Animation {
         this.overlayElement = document.querySelector('.page-overlay');
         this.answerContainer = document.querySelector('.answer-container');
         this.resultContainer = document.querySelector('.result-container');
+        this.timerElement = document.querySelector('.timer');
     }
 
     quizShowAnimation() {
         this.quizContainer.style.transform = 'translateX(0)';
         this.questionContainer.style.transform = 'translateY(0)';
+        this.timerElement.style.transform = 'translateY(0)';
 
         if (this.fromPage === 'artists') {
             this.quizImgElement.style.transform = 'translateY(0)';
@@ -33,6 +35,7 @@ class Animation {
     quizHideAnimation() {
         this.quizContainer.style.transform = 'translate(-100vw, -50vh)';
         this.questionContainer.style.transform = 'translate(-50vw, -50vh)';
+        this.timerElement.style.transform = 'translate(-50vw, -50vh)';
 
         if (this.fromPage === 'artists') {
             this.quizImgElement.style.transform = 'translate(-50vw, -50vh) scale(0)';

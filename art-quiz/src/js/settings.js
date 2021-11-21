@@ -6,15 +6,21 @@ class Settings {
     constructor() {
         this.volume = 1;
         this.muted = 'false';
+        this.time = 'on';
+        this.timeValue = 15;
         this.tempSettings = {
             volume: this.volume,
-            muted: this.muted
+            muted: this.muted,
+            time: this.time,
+            timeValue: this.timeValue
         };
         this.musicSwitch;
         this.volumeSwitch;
         this.volumeBar;
         this.volumeBarPercentage;
         this.volumeButton;
+        this.timeSwitch;
+        this.timeValueInput;
         this.soundEffects = document.querySelector('.soundEffects');
         document.addEventListener('click', this.volumeSettings.bind(this));
         window.addEventListener('load', this.getLocalStorage())
@@ -48,18 +54,27 @@ class Settings {
             <div class="settings-timer-container">
                 <div class="settings-title">Change Time</div>
                 <div class="time-container">
+                    <button class="time-button" type="button" onclick="this.nextElementSibling.stepDown()">−</button>
+                    <input class="time__number" id="time-value" type="number" min="5" max="30" readonly="" step="5" value="15">
+                    <button class="time-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
                 </div>
                 <div class="settings-title">Time Off / On</div>
+                <input type="checkbox" id="time-switch">
+                <label for="time-switch" class="switch">
+                    <span class="time-switch-handle switch-handle"></span>
+                    <span class="time-switch-label switch-label" data-on="On" data-off="Off"></span>
+                </label>
             </div>
             <div class="categories__button" id="home">Home</div>
             <div class="categories__button" id="save">Save</div>
         </div>`
 
-        this.musicSwitch = document.querySelector('#music-switch');
         this.volumeSwitch = document.querySelector('#volume-switch');
         this.volumeBar = document.querySelector('.volume-bar');
         this.volumeBarPercentage = document.querySelector('.volume-bar-percentage');
         this.volumeButton = document.querySelector('.volume');
+        this.timeSwitch = document.querySelector('#time-switch');
+        this.timeValueInput = document.querySelector('#time-value');
 
         this.showValuesOnPage();
     }
@@ -85,24 +100,17 @@ class Settings {
             this.updateVolumeOnPage(event);
         }
 
+        if (event.target.closest('#time-switch')) {
+            this.switchTimeOnPage();
+        }
+
+        if (event.target.closest('.time-button')) {
+            this.changeTimeValueOnPage();
+        }
+
         if (event.target.closest('#save')) {
             this.saveSettings();
         }
-    }
-
-    setLocalStorage() {
-        localStorage.setItem('volume', this.volume);
-        localStorage.setItem('muted', this.muted);
-    }
-
-    getLocalStorage() {
-        if (localStorage.getItem('volume')) {
-            this.volume = localStorage.getItem('volume');
-        }
-        if (localStorage.getItem('muted')) {
-            this.muted = localStorage.getItem('muted');
-        }
-        this.applySettings();
     }
 
     muteVolumeOnPage() {
@@ -139,19 +147,62 @@ class Settings {
         this.tempSettings.volume = newVolume;
     }
 
+    switchTimeOnPage() {
+        if (this.tempSettings.time === 'on') {
+            this.tempSettings.time = 'off';
+            this.timeSwitch.checked = false;
+        }
+        else {
+            this.tempSettings.time = 'on';
+            this.timeSwitch.checked = true;
+        }
+    }
+
+    changeTimeValueOnPage() {
+        this.tempSettings.timeValue = this.timeValueInput.value;
+    }
+
     saveSettings() {
         this.muted = this.tempSettings.muted;
         this.volume = this.tempSettings.volume;
+        this.time = this.tempSettings.time;
+        this.timeValue = this.tempSettings.timeValue;
+
         this.setLocalStorage();
         this.applySettings();
     }
 
+    setLocalStorage() {
+        localStorage.setItem('volume', this.volume);
+        localStorage.setItem('muted', this.muted);
+        localStorage.setItem('time', this.time);
+        localStorage.setItem('timeValue', this.timeValue);
+    }
+
+    getLocalStorage() {
+        if (localStorage.getItem('volume')) {
+            this.volume = localStorage.getItem('volume');
+        }
+        if (localStorage.getItem('muted')) {
+            this.muted = localStorage.getItem('muted');
+        }
+        if (localStorage.getItem('time')) {
+            this.time = localStorage.getItem('time');
+        }
+        if (localStorage.getItem('timeValue')) {
+            this.timeValue = localStorage.getItem('timeValue');
+        }
+        this.applySettings();
+    }
+
     showValuesOnPage() {
-        this.tempSettings.muted = this.muted;
-        this.tempSettings.volume = this.volume;
+        this.tempSettings = { muted: this.muted, volume: this.volume, time: this.time, timeValue: this.timeValue };
         this.volumeBarPercentage.style.width = `${this.volume * 100}%`;
         if (this.muted == 'true') this.muteVolume();
         if (this.muted == 'false') this.unmuteVolume();
+        if (this.time === 'on') this.timeSwitch.checked = true;
+        if (this.time === 'off') this.timeSwitch.checked = false;
+        this.timeValueInput.value = this.timeValue;
     }
 
     applySettings() {
