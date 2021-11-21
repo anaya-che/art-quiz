@@ -212,7 +212,7 @@ class Settings {
     }
 
     showValuesOnPage() {
-        this.volumeBarPercentage.style.width = `${this.volume * 100}%`;
+        this.volumeBarPercentage.style.width = `${this.tempSettings.volume * 100}%`;
         if (this.tempSettings.muted === 'true') this.muteVolume();
         if (this.tempSettings.muted === 'false') this.unmuteVolume();
         if (this.tempSettings.time === 'on') {
