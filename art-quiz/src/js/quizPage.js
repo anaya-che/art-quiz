@@ -91,7 +91,7 @@ class QuizPage {
                         <div class="answer__next-button">Next question</div>
                     </div>
                     <div class="result-container">
-                        <div class="result__text">Congratulations!</div>
+                        <div class="result__text"></div>
                         <div class="result__image"></div>
                         <div class="result__score"></div>
                         <div class="result__next-button" id="next-category">Next</div>

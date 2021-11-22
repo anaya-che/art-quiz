@@ -16,6 +16,11 @@ class Sounds {
         soundEffects.setAttribute('src', "../assets/audio/success.mp3");
         soundEffects.play();
     }
+
+    static failOfQuiz() {
+        soundEffects.setAttribute('src', "../assets/audio/failure.mp3");
+        soundEffects.play();
+    }
 }
 
 export default Sounds;

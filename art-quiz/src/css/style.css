@@ -564,9 +564,9 @@ body {
   background-position: center;
 }
 
-.result__image {
+/* .result__image {
   background-image: url("../assets/svg/champion-cup.svg");
-}
+} */
 
 .result__text,
 .result__score {

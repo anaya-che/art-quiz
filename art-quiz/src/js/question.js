@@ -31,6 +31,8 @@ class Question {
         this.indicatorElement = document.querySelector('.answer__indicator');
         this.timerElement = document.querySelector('.timer');
         this.nextButton = document.querySelector('#next-category');
+        this.resultImage = document.querySelector('.result__image');
+        this.resultText = document.querySelector('.result__text');
         this.animation = new Animation(this.fromPage, this.category);
         this.interval;
         document.addEventListener('click', this.stopTimerOnPage.bind(this));
@@ -151,7 +153,7 @@ class Question {
         }
     }
 
-    async nextQuestion(target) {
+    async nextQuestion() {
         if(this.currentQuestion < this.lastQuestion) {
             this.startTimer();
             this.unsetButtonColor()
@@ -172,17 +174,32 @@ class Question {
             this.setLocalStorage();
             this.getResults();
             this.animation.showResult();
-            Sounds.endOfQuiz();
+            // Sounds.endOfQuiz();
         }
     }
 
-    getResults() {
+    async getResults() {
         let correctAnswers = 0;
         let obj = this.answersData;
         for (let key in obj) {
             if (obj[key]) correctAnswers += 1;
         }
         document.querySelector('.result__score').textContent = `${correctAnswers} / 10`
+        if (correctAnswers === 0) {
+            const src = `./assets/svg/champion-cup-failed.svg`;
+            const image = await MainPage.createImage(src);
+            this.resultImage.style.backgroundImage = `url(${image.src})`;
+            this.resultText.textContent = 'Failure!'
+            Sounds.failOfQuiz();
+        }
+        else {
+            const src = `./assets/svg/champion-cup.svg`;
+            const image = await MainPage.createImage(src);
+            this.resultImage.style.backgroundImage = `url(${image.src})`;
+            if (correctAnswers !== 10 ) this.resultText.textContent = 'Congratulations!';
+            if (correctAnswers === 10) this.resultText.textContent = 'Grand Result!';
+            Sounds.endOfQuiz();
+        }
     }
 
     setLocalStorage() {

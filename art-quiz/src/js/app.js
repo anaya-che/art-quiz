@@ -101,7 +101,7 @@ class App {
 
     nextQuestion({ target }) {
         if (target.closest('.answer__next-button')) {
-            this.quiz.nextQuestion(target);
+            this.quiz.nextQuestion();
         }
     }
 
