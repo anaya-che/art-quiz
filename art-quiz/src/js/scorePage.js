@@ -1,5 +1,6 @@
-import PageLayout from './pageLayout';
+import MainPage from './mainPage';
 import CategoryPage from './categoryPage';
+import Animation from './animation';
 
 class ScorePage {
 
@@ -9,6 +10,7 @@ class ScorePage {
             <div class="categories__title">Score</div>
             <div class="categories__button" id="categories">Categories</div>`
         this.renderCards(scoreCategory, cardsInfo);
+        Animation.pageShowAnimation();
     }
 
     static removeGrayClass() {
@@ -45,7 +47,7 @@ class ScorePage {
     static getImgForCards() {
         document.querySelectorAll('.score__card-item').forEach(async (el) => {
             let src = `./assets/quiz-img/${(el.id)}.webp`;
-            let cardImage = await PageLayout.createImage(src);
+            let cardImage = await MainPage.createImage(src);
             el.style.backgroundImage = `url(${cardImage.src})`;
         })
     }

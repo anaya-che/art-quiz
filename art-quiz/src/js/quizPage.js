@@ -1,3 +1,5 @@
+import Animation from './animation';
+
 class QuizPage {
 
     static setQuizPage(fromPage, page) {
@@ -47,9 +49,9 @@ class QuizPage {
                     <div class="result__score"></div>
                     <div class="result__next-button" id="next-category">Next</div>
                 </div>
-            </div>
-            `
+            </div>`
         }
+        
         if (fromPage === 'pictures') {
             document.querySelector('.main').innerHTML = `
                 <div class="quiz-container">
@@ -96,6 +98,7 @@ class QuizPage {
                     </div>
                 </div>`
         }
+        Animation.pageShowAnimation();
     }
 }
 

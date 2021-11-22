@@ -1,11 +1,8 @@
-
-
 class Animation {
     
     constructor(fromPage, category) {
         this.category = category;
         this.fromPage = fromPage;
-        this.body = document.querySelector('body');
         this.quizContainer = document.querySelector('.quiz-container');
         this.quizImgElement = document.querySelector('.quiz__img');
         this.quizImgAnswerContainer = document.querySelector('.quiz__img-container');
@@ -64,6 +61,14 @@ class Animation {
     showResult() {
         this.answerContainer.style.transform = 'translate(-100vw, -100vh) scale(0)';
         this.resultContainer.style.transform = 'translateY(0)';
+    }
+
+    static pageShowAnimation() {
+        document.querySelector('.main').style.transform = 'unset';
+    }
+
+    static pageHideAnimation() {
+        document.querySelector('.main').style.transform = 'translateX(-100vw)';
     }
     
 }

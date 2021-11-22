@@ -102,6 +102,7 @@ body {
   min-height: 86vh;
   margin: 0 auto;
   padding: var(--padding-main);
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .footer {
@@ -161,6 +162,7 @@ body {
   flex-wrap: wrap;
   justify-content: space-evenly;
   padding-top: calc(80vh - 165px);
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .main__button {
@@ -194,14 +196,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.categories__buttons-container,
-.settings-title-container {
+.categories__buttons-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .categories__title {
@@ -245,6 +248,7 @@ body {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 28px;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .card {
@@ -392,6 +396,7 @@ body {
   align-items: center;
   gap: 10px;
   transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translate(-100vw, -50vh);
 }
 
 .quiz__question-container {
@@ -405,6 +410,7 @@ body {
 }
 
 .timer {
+  height: 30px;
   font-size: 0.8em;
   transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
   transform: translate(-50vw, -50vh);
@@ -593,6 +599,14 @@ body {
 
 /* SETTINGS */
 
+.settings-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 .settings-main-title {
   font-size: 1.1em;
   text-transform: uppercase;
@@ -609,6 +623,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .settings-volume-container,
@@ -663,8 +678,6 @@ body {
   background: var(--orange);
   transition: 0.25s;
 }
-
-
 
 input[type=checkbox]{
 	display: none;
@@ -789,6 +802,7 @@ input[type=number]::-webkit-outer-spin-button {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 

@@ -1,7 +1,10 @@
-import PageLayout from './pageLayout';
+import MainPage from './mainPage';
 import Question from './question';
 import ScorePage from './scorePage';
 import Settings from './settings';
+import CategoryPage from './categoryPage';
+import QuizPage from './quizPage';
+import Animation from './animation';
 
 class App {
 
@@ -15,7 +18,7 @@ class App {
         this.lastQuestion;
         this.currentQuestion;
         this.quiz;
-        document.addEventListener('DOMContentLoaded', PageLayout.init(this.fromPage, this.page));
+        document.addEventListener('DOMContentLoaded', MainPage.setMainPage());
         document.addEventListener('DOMContentLoaded', this.settings = new Settings);
         document.addEventListener('click', this.changePage.bind(this));
         document.addEventListener('click', this.checkAnswer.bind(this));
@@ -30,50 +33,50 @@ class App {
     }
 
     async changePage({ target }) {
-
         if (target.closest('#artists')) {
             this.fromPage = 'home'
             this.page = 'artists';
-            PageLayout.init(this.fromPage, this.page);
+            Animation.pageHideAnimation();
+            setTimeout(() => CategoryPage.setArtistsPage(this.page), 1000);
         }
-        
         if (target.closest('#pictures')) {
             this.fromPage = 'home'
             this.page = 'pictures';
-            PageLayout.init(this.fromPage, this.page);
+            Animation.pageHideAnimation();
+            setTimeout(() => CategoryPage.setArtistsPage(this.page), 1000);
         }
-
         if (target.closest('#home')) {
             this.fromPage = this.page;
             this.page = 'home';
-            PageLayout.init(this.fromPage, this.page);
+            Animation.pageHideAnimation();
+            setTimeout(() => MainPage.setMainPage(), 1000);
         }
-
         if (target.closest('.score_button')) {
             this.fromPage = this.page;
             let scoreCategory = Number(target.closest('.score_button').id.split('score')[1]);
             this.page = scoreCategory;
             this.getInfoForQuestions();
-            ScorePage.setScorePage(scoreCategory, this.questions);
+            Animation.pageHideAnimation();
+            setTimeout(() => ScorePage.setScorePage(scoreCategory, this.questions), 1000);
         }
-
         if (target.closest('.card') && !target.closest('.score_button')) {
             this.fromPage = this.page;
             let quizCategory = Number(target.closest('.card').id.split('card')[1]);
             this.page = quizCategory;
-            PageLayout.init(this.fromPage, this.page);
-            this.startQuiz();
+            Animation.pageHideAnimation();
+            setTimeout(() => QuizPage.setQuizPage(this.fromPage, this.page), 1000);
+            setTimeout(() => this.startQuiz(), 1000);
         }
-
         if (target.closest('#categories') || target.closest('#next-category')) {
             if(this.fromPage === 'artists') this.page = 'artists';
             if(this.fromPage === 'pictures') this.page = 'pictures';
-            PageLayout.init(this.fromPage, this.page);
+            if (!target.closest('#next-category')) Animation.pageHideAnimation();
+            setTimeout(() => CategoryPage.setArtistsPage(this.page), 1000);
         }
-
         if (target.closest('.header-settings') && this.page !== 'settings') {
             this.page = 'settings';
-            this.settings.setSettingsPage();
+            Animation.pageHideAnimation();
+            setTimeout(() => this.settings.setSettingsPage(), 1000);
         }
     }
 
@@ -110,7 +113,6 @@ class App {
             })
         }
     }
-
 }
 
 export default App;

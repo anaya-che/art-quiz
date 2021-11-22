@@ -1,4 +1,4 @@
-import PageLayout from './pageLayout';
+import MainPage from './mainPage';
 import CategoryPage from './categoryPage';
 import Animation from './animation';
 import Sounds from './sounds';
@@ -30,9 +30,11 @@ class Question {
         this.yearElement = document.querySelector('.answer__year');
         this.indicatorElement = document.querySelector('.answer__indicator');
         this.timerElement = document.querySelector('.timer');
+        this.nextButton = document.querySelector('#next-category');
         this.animation = new Animation(this.fromPage, this.category);
         this.interval;
         document.addEventListener('click', this.stopTimerOnPage.bind(this));
+        this.nextButton.addEventListener('click', this.hidePage.bind(this));
     }
 
     async startQuiz() {
@@ -54,7 +56,7 @@ class Question {
 
     async getQuizImg(num){
         const src = `./assets/quiz-img/${num}.webp`;
-        const quizImage = await PageLayout.createImage(src);
+        const quizImage = await MainPage.createImage(src);
         this.answerImageElement.style.backgroundImage = `url(${quizImage.src})`;
         if (this.fromPage === 'artists') this.quizImgElement.style.backgroundImage = `url(${quizImage.src})`;
     }
@@ -94,7 +96,7 @@ class Question {
         this.quizImgAnswerElements.forEach( async (el, i) => {
             el.id = answersArr[i];
             const src = `./assets/quiz-img/${answersArr[i]}.webp`;
-            const quizImage = await PageLayout.createImage(src);
+            const quizImage = await MainPage.createImage(src);
             el.style.backgroundImage = `url(${quizImage.src})`;
         });
     }
@@ -224,6 +226,11 @@ class Question {
             this.stopTimer();
             this.wrongAnswer();
         }
+    }
+
+    hidePage() {
+        this.animation.popupHideAnimation();
+        Animation.pageHideAnimation()
     }
 }
 

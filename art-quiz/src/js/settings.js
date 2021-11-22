@@ -1,5 +1,6 @@
 
 import Sounds from './sounds';
+import Animation from './animation';
 
 class Settings {
 
@@ -85,6 +86,7 @@ class Settings {
         this.stepUpButton = document.querySelector('#stepUp');
         this.getLocalStorage();
         this.showValuesOnPage();
+        Animation.pageShowAnimation();
     }
 
     

@@ -1,8 +1,9 @@
-import PageLayout from './pageLayout';
+import MainPage from './mainPage';
+import Animation from './animation';
 
 class CategoryPage {
 
-    static setArtistsPage(page) {
+    static setArtistsPage(toPage) {
         document.querySelector('body').style.backgroundImage = `unset`;
         document.querySelector('.main').innerHTML = `
             <div class="categories-container">
@@ -14,15 +15,17 @@ class CategoryPage {
                 <div class="cards-container"></div>
             </div>`
 
-        if (page === 'artists') {
+        if (toPage === 'artists') {
             this.renderCards(0, 12);
             this.getCategoryBg(0, 112, 0);
         }
 
-        if (page === 'pictures') {
+        if (toPage === 'pictures') {
             this.renderCards(12, 24);
             this.getCategoryBg(120, 232, 12);
         }
+
+        Animation.pageShowAnimation();
     }
 
     static renderCards(num, max) {
@@ -56,7 +59,7 @@ class CategoryPage {
     static async getCategoryBg(imgNum, maxImgNum, id) {
         while(imgNum < maxImgNum) {
             let src = `./assets/quiz-img/${(imgNum)}.webp`;
-            let cardImage = await PageLayout.createImage(src);
+            let cardImage = await MainPage.createImage(src);
             if (document.querySelector(`#card${(id)}`)) {
                 this.setCategoryBg(cardImage.src, id);
             }
