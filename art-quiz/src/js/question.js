@@ -192,12 +192,18 @@ class Question {
             this.resultText.textContent = 'Failure!'
             Sounds.failOfQuiz();
         }
+        if (correctAnswers === 10) {
+            const src = `./assets/svg/stars.svg`;
+            const image = await MainPage.createImage(src);
+            this.resultImage.style.backgroundImage = `url(${image.src})`;
+            this.resultText.textContent = 'Grand Result!';
+            Sounds.endOfQuiz();
+        }
         else {
             const src = `./assets/svg/champion-cup.svg`;
             const image = await MainPage.createImage(src);
             this.resultImage.style.backgroundImage = `url(${image.src})`;
-            if (correctAnswers !== 10 ) this.resultText.textContent = 'Congratulations!';
-            if (correctAnswers === 10) this.resultText.textContent = 'Grand Result!';
+            this.resultText.textContent = 'Congratulations!';
             Sounds.endOfQuiz();
         }
     }
