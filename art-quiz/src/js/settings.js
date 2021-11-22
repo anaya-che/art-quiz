@@ -56,9 +56,9 @@ class Settings {
                 <div class="settings-timer-container">
                     <div class="settings-title">Change Time</div>
                     <div class="time-container">
-                        <button class="time-button" type="button" onclick="this.nextElementSibling.stepDown()">−</button>
+                        <button class="time-button" id="stepDown" type="button" onclick="this.nextElementSibling.stepDown()">−</button>
                         <input class="time__number" id="time-value" type="number" min="5" max="30" readonly step="5" value="15">
-                        <button class="time-button" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+                        <button class="time-button" id="stepUp" type="button" onclick="this.previousElementSibling.stepUp()">+</button>
                     </div>
                     <div class="settings-title">Time Off / On</div>
                     <input type="checkbox" id="time-switch">
@@ -81,6 +81,8 @@ class Settings {
         this.timeSwitch = document.querySelector('#time-switch');
         this.timeValueInput = document.querySelector('#time-value');
         this.timeContainer = document.querySelector('.time-container');
+        this.stepDownButton = document.querySelector('#stepDown');
+        this.stepUpButton = document.querySelector('#stepUp');
         this.getLocalStorage();
         this.showValuesOnPage();
     }
@@ -165,11 +167,15 @@ class Settings {
             this.tempSettings.time = 'off';
             this.timeSwitch.checked = false;
             this.timeContainer.classList.add('inactive');
+            this.stepDownButton.setAttribute('onclick', "event.preventDefault()");
+            this.stepUpButton.setAttribute('onclick', "event.preventDefault()");
         }
         else {
             this.tempSettings.time = 'on';
             this.timeSwitch.checked = true;
             this.timeContainer.classList.remove('inactive');
+            this.stepDownButton.setAttribute('onclick', "this.nextElementSibling.stepDown()");
+            this.stepUpButton.setAttribute('onclick', "this.previousElementSibling.stepUp()");
         }
     }
 
@@ -218,17 +224,16 @@ class Settings {
         if (this.tempSettings.time === 'on') {
             this.timeSwitch.checked = true;
             this.timeContainer.classList.remove('inactive');
+            this.stepDownButton.setAttribute('onclick', "this.nextElementSibling.stepDown()");
+            this.stepUpButton.setAttribute('onclick', "this.previousElementSibling.stepUp()");
         }
         if (this.tempSettings.time === 'off') {
             this.timeSwitch.checked = false;
             this.timeContainer.classList.add('inactive');
-            document.querySelectorAll('.time-button').forEach(el => {
-                el.setAttribute('onclick', "event.preventDefault()");
-            });
-            
+            this.stepDownButton.setAttribute('onclick', "event.preventDefault()");
+            this.stepUpButton.setAttribute('onclick', "event.preventDefault()");
         }
         this.timeValueInput.value = this.tempSettings.timeValue;
-        
     }
 
     applySettings() {
