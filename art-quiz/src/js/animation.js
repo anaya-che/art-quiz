@@ -5,6 +5,7 @@ class Animation {
     constructor(fromPage, category) {
         this.category = category;
         this.fromPage = fromPage;
+        this.body = document.querySelector('body');
         this.quizContainer = document.querySelector('.quiz-container');
         this.quizImgElement = document.querySelector('.quiz__img');
         this.quizImgAnswerContainer = document.querySelector('.quiz__img-container');
@@ -51,6 +52,7 @@ class Animation {
         this.popupElement.style.transform = 'translateX(0)';
         this.answerContainer.style.transform = 'translateY(0)';
         this.overlayElement.style.opacity = '0.6';
+        this.popupElement.style.height = `${document.body.clientHeight}px`;
     }
 
     popupHideAnimation() {
