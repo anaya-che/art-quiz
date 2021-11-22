@@ -4,6 +4,7 @@ class Animation {
         this.category = category;
         this.fromPage = fromPage;
         this.quizContainer = document.querySelector('.quiz-container');
+        this.quizPagination = document.querySelector('.quiz__pagination');
         this.quizImgElement = document.querySelector('.quiz__img');
         this.quizImgAnswerContainer = document.querySelector('.quiz__img-container');
         this.answersContainer = document.querySelector('.quiz__answers-container')
@@ -17,21 +18,23 @@ class Animation {
 
     quizShowAnimation() {
         this.quizContainer.style.transform = 'translateX(0)';
-        this.questionContainer.style.transform = 'translateY(0)';
-        this.timerElement.style.transform = 'translateY(0)';
+        this.quizPagination.style.transform = 'unset';
+        this.questionContainer.style.transform = 'unset';
+        this.timerElement.style.transform = 'unset';
 
         if (this.fromPage === 'artists') {
-            this.quizImgElement.style.transform = 'translateY(0)';
-            this.answersContainer.style.transform = 'translateY(0)';
+            this.quizImgElement.style.transform = 'unset';
+            this.answersContainer.style.transform = 'unset';
         }
 
         if (this.fromPage === 'pictures') {
-            this.quizImgAnswerContainer.style.transform = 'translateY(0)';
+            this.quizImgAnswerContainer.style.transform = 'unset';
         }
     }
 
     quizHideAnimation() {
         this.quizContainer.style.transform = 'translate(-100vw, -50vh)';
+        this.quizPagination.style.transform = 'translateX(-100vw)';
         this.questionContainer.style.transform = 'translate(-50vw, -50vh)';
         this.timerElement.style.transform = 'translate(-50vw, -50vh)';
 
@@ -46,8 +49,8 @@ class Animation {
     }
 
     popupShowAnimation() {
-        this.popupElement.style.transform = 'translateX(0)';
-        this.answerContainer.style.transform = 'translateY(0)';
+        this.popupElement.style.transform = 'unset';
+        this.answerContainer.style.transform = 'unset';
         this.overlayElement.style.opacity = '0.6';
         this.popupElement.style.height = `${document.body.clientHeight}px`;
     }
@@ -60,7 +63,7 @@ class Animation {
 
     showResult() {
         this.answerContainer.style.transform = 'translate(-100vw, -100vh) scale(0)';
-        this.resultContainer.style.transform = 'translateY(0)';
+        this.resultContainer.style.transform = 'unset';
     }
 
     static pageShowAnimation() {

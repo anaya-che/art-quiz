@@ -430,6 +430,7 @@ body {
   display: flex;
   gap: 15px;
   transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transform: translateX(-100vw);
 }
 
 .pagination-dot {
@@ -444,7 +445,7 @@ body {
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   width: 600px;
-  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
   transform: translate(-100vw, 0);
 }
 
