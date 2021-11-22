@@ -1,3 +1,4 @@
-import App from './js/app'
+import App from './js/app';
 
-new App;
+const app = new App();
+app.getData();

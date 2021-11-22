@@ -1,11 +1,9 @@
 import Animation from './animation';
 
 class QuizPage {
-
-    static setQuizPage(fromPage, page) {
-
-        if (fromPage === 'artists') {
-            document.querySelector('.main').innerHTML = `
+  static setQuizPage(fromPage) {
+    if (fromPage === 'artists') {
+      document.querySelector('.main').innerHTML = `
             <div class="quiz-container">
                 <div class="quiz__question-container">
                     <div class="quiz__button" id="home">Home</div>
@@ -49,11 +47,11 @@ class QuizPage {
                     <div class="result__score"></div>
                     <div class="result__next-button" id="next-category">Next</div>
                 </div>
-            </div>`
-        }
-        
-        if (fromPage === 'pictures') {
-            document.querySelector('.main').innerHTML = `
+            </div>`;
+    }
+
+    if (fromPage === 'pictures') {
+      document.querySelector('.main').innerHTML = `
                 <div class="quiz-container">
                     <div class="quiz__question-container">
                         <div class="quiz__button" id="home">Home</div>
@@ -96,10 +94,10 @@ class QuizPage {
                         <div class="result__score"></div>
                         <div class="result__next-button" id="next-category">Next</div>
                     </div>
-                </div>`
-        }
-        Animation.pageShowAnimation();
+                </div>`;
     }
+    Animation.pageShowAnimation();
+  }
 }
 
 export default QuizPage;

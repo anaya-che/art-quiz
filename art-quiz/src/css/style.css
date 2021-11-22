@@ -1,29 +1,29 @@
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   src: url("../assets/fonts/Lato-Thin.ttf");
   font-weight: 100;
 }
 
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   src: url("../assets/fonts/Lato-Light.ttf");
   font-weight: 300;
 }
 
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   src: url("../assets/fonts/Lato-Regular.ttf");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   src: url("../assets/fonts/Lato-Bold.ttf");
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'Lato';
+  font-family: "Lato";
   src: url("../assets/fonts/Lato-Black.ttf");
   font-weight: 900;
 }
@@ -33,9 +33,9 @@
   --padding: 10px 30px;
   --padding-main: 5px 30px;
   --dark-blue: #000003;
-  --yellow: #F5DF4D;
-  --orange: #FDAC53;
-  --white: #FFFFFF;
+  --yellow: #f5df4d;
+  --orange: #fdac53;
+  --white: #ffffff;
   --gray: #939597;
   --back-black: rgba(0, 0, 3, 0.3);
   --back-gray: rgba(54, 57, 69, 0.3);
@@ -56,7 +56,7 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 400;
   font-size: var(--font);
   color: var(--white);
@@ -142,7 +142,8 @@ body {
 .header-settings:hover,
 .git-link:hover,
 .rss-link:hover {
-  filter: invert(52%) sepia(91%) saturate(392%) hue-rotate(-23deg) brightness(134%) contrast(97%);
+  filter: invert(52%) sepia(91%) saturate(392%) hue-rotate(-23deg)
+    brightness(134%) contrast(97%);
   opacity: 0.8;
 }
 
@@ -182,7 +183,8 @@ body {
   border: 1px solid var(--white);
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 15px;
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .main__button:active {
@@ -235,7 +237,8 @@ body {
   border: 1px solid var(--white);
   outline-color: rgba(255, 255, 255, 0);
   outline-offset: 15px;
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .categories__button:active,
@@ -321,7 +324,7 @@ body {
 }
 
 .score_button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -334,7 +337,6 @@ body {
 }
 
 /* SCORE */
-
 
 .score-container {
   display: flex;
@@ -463,15 +465,16 @@ body {
 
 .quiz__answer:hover {
   border: 1px solid var(--white);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .quiz__img-container {
- display: grid;
- grid-template-columns: 1fr 1fr;
- grid-gap: 20px;
- transform: translate(-50vw, -50vh) scale(0);
- transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  transform: translate(-50vw, -50vh) scale(0);
+  transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .quiz__img-answer {
@@ -511,7 +514,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100%;
-  background-color: #9BB7D4;
+  background-color: #9bb7d4;
   opacity: 0;
   z-index: 3;
   transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
@@ -590,7 +593,8 @@ body {
 .answer__next-button:hover,
 .result__next-button:hover {
   border: 1px solid var(--white);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .answer__next-button:active,
@@ -668,7 +672,7 @@ body {
 .volume-bar {
   width: 200px;
   height: 5px;
-  background: #FFFFFF;
+  background: #ffffff;
   transition: 0.25s;
   cursor: pointer;
 }
@@ -680,8 +684,8 @@ body {
   transition: 0.25s;
 }
 
-input[type=checkbox]{
-	display: none;
+input[type="checkbox"] {
+  display: none;
 }
 
 .switch {
@@ -705,7 +709,7 @@ input[type=checkbox]{
 
 .switch-handle::before {
   position: absolute;
-  content: '';
+  content: "";
   height: 26px;
   width: 26px;
   left: 4px;
@@ -794,8 +798,8 @@ input[type=checkbox]{
   transition: 0.4s;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
@@ -806,26 +810,22 @@ input[type=number]::-webkit-outer-spin-button {
   transition: 1.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-
 @media (max-width: 1023px) {
-
   .categories__buttons-container {
-    justify-content:space-evenly;
+    justify-content: space-evenly;
   }
 
   .cards-container {
-    justify-content:space-evenly;
+    justify-content: space-evenly;
   }
 
   .settings-inner-container {
     justify-content: space-around;
     gap: 20px;
   }
-
 }
 
 @media (max-width: 768px) {
-
   :root {
     --font: 24px;
   }
@@ -868,13 +868,14 @@ input[type=number]::-webkit-outer-spin-button {
   .quiz__img-container {
     grid-gap: 10px;
   }
-    
+
   .quiz__img-answer {
     width: 250px;
     height: 250px;
   }
 
-  .answer-container, .result-container {
+  .answer-container,
+  .result-container {
     width: 500px;
     height: 500px;
     bottom: calc(50vh - 250px);
@@ -885,11 +886,9 @@ input[type=number]::-webkit-outer-spin-button {
   .result__image {
     margin-top: 25px;
   }
-
 }
 
 @media (max-width: 580px) {
-
   :root {
     --padding: 10px 20px;
   }
@@ -962,7 +961,8 @@ input[type=number]::-webkit-outer-spin-button {
     grid-template-columns: 1fr;
   }
 
-  .answer-container, .result-container {
+  .answer-container,
+  .result-container {
     width: 340px;
     height: 340px;
     bottom: calc(50vh - 170px);
@@ -978,16 +978,17 @@ input[type=number]::-webkit-outer-spin-button {
     background-size: 20px;
   }
 
-  .answer__next-button, .result__next-button {
+  .answer__next-button,
+  .result__next-button {
     height: 35px;
     margin-top: 20px;
   }
 
-  .answer__image, .result__image {
+  .answer__image,
+  .result__image {
     width: 170px;
     height: 170px;
     margin-top: 0;
     margin-bottom: 8px;
   }
-
 }
