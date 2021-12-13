@@ -96,10 +96,11 @@ class App {
   }
 
   getInfoForQuestions() {
-    const num = this.page * 10;
+    const numberOfQuestions = 10;
+    const num = this.page * numberOfQuestions;
     this.questions = {};
     this.data.forEach((el, i) => {
-      if (i >= num && i < num + 10) this.questions[i] = el;
+      if (i >= num && i < num + numberOfQuestions) this.questions[i] = el;
     });
   }
 

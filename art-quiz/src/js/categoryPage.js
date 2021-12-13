@@ -15,13 +15,23 @@ class CategoryPage {
             </div>`;
 
     if (toPage === 'artists') {
-      this.renderCards(0, 12);
-      this.getCategoryBg(0, 112);
+      const firstCardId = 0;
+      const lastCardId = 11;
+      const firstCardBgImg = 0;
+      const lastCardBgImg = 110;
+
+      this.renderCards(firstCardId, lastCardId);
+      this.getCategoryBg(firstCardBgImg, lastCardBgImg);
     }
 
     if (toPage === 'pictures') {
-      this.renderCards(12, 24);
-      this.getCategoryBg(120, 232);
+      const firstCardId = 12;
+      const lastCardId = 23;
+      const firstCardBgImg = 120;
+      const lastCardBgImg = 230;
+
+      this.renderCards(firstCardId, lastCardId);
+      this.getCategoryBg(firstCardBgImg, lastCardBgImg);
     }
 
     Animation.pageShowAnimation();
@@ -29,7 +39,8 @@ class CategoryPage {
 
   static renderCards(num, max) {
     const cardContainerElement = document.querySelector('.cards-container');
-    for (let i = num; i < max; i += 1) {
+    const categoryLength = 2;
+    for (let i = num; i <= max; i += 1) {
       const score = this.setCartsResults(i);
       let out = '';
       if (score || score === 0) {
@@ -38,7 +49,7 @@ class CategoryPage {
                         <div class="card-title">
                             <div class="card-number">${(i + 1)
     .toString()
-    .padStart(2, '0')}</div>
+    .padStart(categoryLength, '0')}</div>
                             <div class="card-score">${score} / 10</div>
                         </div>
                         <div class="score_button" id="score${i}">Score</div>
@@ -49,7 +60,7 @@ class CategoryPage {
                     <div class="card-title">
                         <div class="card-number">${(i + 1)
     .toString()
-    .padStart(2, '0')}</div>
+    .padStart(categoryLength, '0')}</div>
                         <div class="card-score"></div>
                     </div>
                 </div>`;
@@ -63,7 +74,7 @@ class CategoryPage {
     let num = imgNum;
     const cardElements = document.querySelectorAll('.card');
     const imagesArray = [];
-    while (num < maxImgNum) {
+    while (num <= maxImgNum) {
       const src = `./assets/quiz-img/${(num)}.webp`;
       imagesArray.push(Promise.resolve(MainPage.createImage(src)));
       num += 10;

@@ -39,8 +39,9 @@ class Question {
 
   async startQuiz() {
     this.answersData = {};
-    this.firstQuestion = this.category * 10;
-    this.lastQuestion = this.firstQuestion + 9;
+    const numberOfQuestions = 10;
+    this.firstQuestion = this.category * numberOfQuestions;
+    this.lastQuestion = this.firstQuestion + numberOfQuestions - 1;
     this.currentQuestion = this.firstQuestion;
     this.dotId = 1;
     await this.getQuizImg(this.firstQuestion);
@@ -75,7 +76,8 @@ class Question {
     const answersArr = [];
     answersArr.push(this.questions[num].author);
     while (answersArr.length < 4) {
-      const i = Math.floor(Math.random() * 240);
+      const numberOfAllQuestions = 240;
+      const i = Math.floor(Math.random() * numberOfAllQuestions);
       if (!answersArr.includes(this.data[i].author)) { answersArr.push(this.data[i].author); }
     }
     Question.shuffleAnswers(answersArr);
@@ -87,9 +89,10 @@ class Question {
 
   getImgAnswers(num) {
     const answersArr = [];
+    const numberOfAllQuestions = 240;
     answersArr.push(this.questions[num].imageNum);
     while (answersArr.length < 4) {
-      const i = Math.floor(Math.random() * 240);
+      const i = Math.floor(Math.random() * numberOfAllQuestions);
       if (
         !answersArr.includes(this.data[i].imageNum)
         && this.data[i].author !== this.questions[num].author
@@ -185,6 +188,7 @@ class Question {
 
   async getResults() {
     let correctAnswers = 0;
+    const numberOfQuestions = 10;
     const obj = Object.values(this.answersData);
     if (obj) {
       obj.forEach((el) => {
@@ -200,8 +204,7 @@ class Question {
       this.resultImage.style.backgroundImage = `url(${image.src})`;
       this.resultText.textContent = 'Failure!';
       Sounds.failOfQuiz();
-    }
-    if (correctAnswers === 10) {
+    } else if (correctAnswers === numberOfQuestions) {
       const src = './assets/svg/stars.svg';
       const image = await MainPage.createImage(src);
       this.resultImage.style.backgroundImage = `url(${image.src})`;
