@@ -16,13 +16,13 @@ class CategoryPage {
 
     if (toPage === 'artists') {
       this.renderCards(0, 12);
-      this.getCategoryBg(0, 112, 0);
+      this.getCategoryBg(0, 112);
       // this.getCategoryBg(0);
     }
 
     if (toPage === 'pictures') {
       this.renderCards(12, 24);
-      this.getCategoryBg(120, 232, 12);
+      this.getCategoryBg(120, 232);
     }
 
     Animation.pageShowAnimation();
@@ -60,25 +60,20 @@ class CategoryPage {
     }
   }
 
-  static async getCategoryBg(imgNum, maxImgNum, id) {
+  static getCategoryBg(imgNum, maxImgNum) {
     let num = imgNum;
-    let newId = id;
-    let cardImage = '';
+    const cardElements = document.querySelectorAll('.card');
+    const imagesArray = [];
     while (num < maxImgNum) {
       const src = `./assets/quiz-img/${(num)}.webp`;
-      // eslint-disable-next-line no-await-in-loop
-      cardImage = await MainPage.createImage(src);
-      if (document.querySelector(`#card${(newId)}`)) {
-        CategoryPage.setCategoryBg(cardImage.src, newId);
-      }
+      imagesArray.push(Promise.resolve(MainPage.createImage(src)));
       num += 10;
-      newId += 1;
     }
-  }
-
-  static setCategoryBg(src, id) {
-    const cardElement = document.querySelector(`#card${(id)}`);
-    cardElement.style.backgroundImage = `url(${src})`;
+    Promise.all(imagesArray).then((values) => {
+      values.forEach((el, i) => {
+        cardElements[i].style.backgroundImage = `url(${el.src})`;
+      });
+    });
   }
 
   static setCartsResults(id) {
