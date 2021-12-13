@@ -32,7 +32,7 @@ class CategoryPage {
     for (let i = num; i < max; i += 1) {
       const score = this.setCartsResults(i);
       let out = '';
-      if (score !== undefined) {
+      if (score || score === 0) {
         out = `
                     <div class="card" id="card${i}">
                         <div class="card-title">
@@ -90,7 +90,7 @@ class CategoryPage {
         return correctAnswers;
       }
     }
-    return undefined;
+    return null;
   }
 }
 
