@@ -158,6 +158,7 @@ body {
 }
 
 /* MAIN PAGE */
+
 .button-container {
   display: flex;
   flex-wrap: wrap;
@@ -566,10 +567,6 @@ body {
   background-size: contain;
   background-position: center;
 }
-
-/* .result__image {
-  background-image: url("../assets/svg/champion-cup.svg");
-} */
 
 .result__text,
 .result__score {

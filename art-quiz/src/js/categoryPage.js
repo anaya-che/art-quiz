@@ -17,7 +17,6 @@ class CategoryPage {
     if (toPage === 'artists') {
       this.renderCards(0, 12);
       this.getCategoryBg(0, 112);
-      // this.getCategoryBg(0);
     }
 
     if (toPage === 'pictures') {

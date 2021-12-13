@@ -180,23 +180,17 @@ class Question {
       this.setLocalStorage();
       this.getResults();
       this.animation.showResult();
-      // Sounds.endOfQuiz();
     }
   }
 
   async getResults() {
     let correctAnswers = 0;
     const obj = Object.values(this.answersData);
-    // console.log(obj);
     if (obj) {
       obj.forEach((el) => {
         if (el) correctAnswers += 1;
       });
     }
-
-    // for (const key in obj) {
-    //   if (obj[key]) correctAnswers += 1;
-    // }
     document.querySelector(
       '.result__score',
     ).textContent = `${correctAnswers} / 10`;
