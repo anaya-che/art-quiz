@@ -72,12 +72,13 @@ class CategoryPage {
 
   static getCategoryBg(imgNum, maxImgNum) {
     let num = imgNum;
+    const nextNumOfImage = 10;
     const cardElements = document.querySelectorAll('.card');
     const imagesArray = [];
     while (num <= maxImgNum) {
       const src = `./assets/quiz-img/${(num)}.webp`;
       imagesArray.push(Promise.resolve(MainPage.createImage(src)));
-      num += 10;
+      num += nextNumOfImage;
     }
     Promise.all(imagesArray).then((values) => {
       values.forEach((el, i) => {
