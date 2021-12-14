@@ -77,7 +77,7 @@ class CategoryPage {
     const imagesArray = [];
     while (num <= maxImgNum) {
       const src = `./assets/quiz-img/${(num)}.webp`;
-      imagesArray.push(Promise.resolve(MainPage.createImage(src)));
+      imagesArray.push(MainPage.createImage(src));
       num += nextNumOfImage;
     }
     Promise.all(imagesArray).then((values) => {
