@@ -1,5 +1,5 @@
 # Art Quiz
-[RS School «JavaScript/Front-end»](https://rs.school/js/)
+[RS School «JavaScript/Front-End»](https://rs.school/js/)
 
 **Tasks:** https://github.com/rolling-scopes-school/tasks/blob/master/tasks/art-quiz/art-quiz.md
 
