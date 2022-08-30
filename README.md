@@ -1,2 +1,6 @@
-# anaya-che-JSFE2021Q3
-Private repository for @anaya-che
+# Art Quiz
+[RS School «JavaScript/Front-end»](https://rs.school/js/)
+
+**Tasks:** https://github.com/rolling-scopes-school/tasks/blob/master/tasks/art-quiz/art-quiz.md
+
+**Deploy:** https://anaya-che-art-quiz.netlify.app
